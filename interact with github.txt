@@ -1,0 +1,10 @@
+git init - first rep
+
+connection between the local and global repository
+git remote add origin https://github.com/Slobodeniuk47/MyShop.git
+
+git add .     || git add file.txt
+
+//git config --gloval user.email "Slobodeniuk47@gmail.com"
+git commit -m "Text commint"
+git push origin master  | master - стандартна гілка! Можно вибрати любю гілку!
