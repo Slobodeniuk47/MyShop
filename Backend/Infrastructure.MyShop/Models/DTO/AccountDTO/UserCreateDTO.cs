@@ -17,7 +17,7 @@ namespace Infrastructure.MyShop.Models.DTO.AccountDTO
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string? Role { get; set; }
-        public List<PermissionItemDTO> Permissions { get; set; }
+        //public List<PermissionItemDTO> Permissions { get; set; }
 
     }
 }

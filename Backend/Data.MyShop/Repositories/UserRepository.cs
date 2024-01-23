@@ -21,7 +21,7 @@ namespace Data.MyShop.Repositories
         }
 
 
-        public async Task<bool> ValidatePasswordAsync(string email, string password)
+        public async Task<bool> ValidateLoginAsync(string email, string password)
         {
             var result = await _userManager.CheckPasswordAsync(await _userManager.FindByEmailAsync(email), password);
             return result;

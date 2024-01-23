@@ -13,7 +13,7 @@ namespace Infrastructure.MyShop.Models.DTO.AccountDTO
         public string Email { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile ImageUpload { get; set; }
         public string phoneNumber { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }

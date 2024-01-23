@@ -5,7 +5,6 @@ using Data.MyShop.Constants;
 using Infrastructure.MyShop.Mapper;
 using FluentValidation.AspNetCore;
 using FluentValidation;
-using Web.MyShop.Validations;
 using Data.MyShop.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.MyShop.Services;
@@ -84,7 +83,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAutoMapper(typeof(AppMapProfile));
 
 #pragma warning disable CS0618 //Type or member is absollute
-builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
+//using FluentValidation.AspNetCore;
+//builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
 #pragma warning restore CS0618 // Type or member is absolute
 
 builder.Services.AddCors();

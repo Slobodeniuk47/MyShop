@@ -11,7 +11,7 @@ namespace Data.MyShop.Interfaces
     public interface IUserRepository
     {
         Task<IdentityResult> RegisterUserAsync(UserEntity model, string password);
-        Task<bool> ValidatePasswordAsync(string email, string password);
+        Task<bool> ValidateLoginAsync(string email, string password);
         Task<UserEntity> GetUserByIdAsync(string id);
         Task<UserEntity> UpdateUserAsync(UserEntity model);
         Task<UserEntity> GetUserByEmailAsync(string email);
