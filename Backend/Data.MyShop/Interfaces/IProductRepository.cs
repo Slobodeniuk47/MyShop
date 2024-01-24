@@ -12,14 +12,8 @@ namespace Data.MyShop.Interfaces
         IQueryable<ProductEntity> Products { get; }
         Task<IQueryable<ProductEntity>> SearchProducts(string name);
         Task<ProductEntity> GetByName(string name);
-        //ICollection<Product> GetProductsAsync(GetProductsVM model);
         ICollection<ProductEntity> GetProductsAsync();
-
-        //public Task RemoveVariantProductsAsync(int productId);
         public Task RemoveProductImagesAsync(int productId);
-
-        //public Task AddVariantProductsToProductAsync(int productId, List<int> variantsIds);
-
         public Task SaveChangesAsync();
 
     }

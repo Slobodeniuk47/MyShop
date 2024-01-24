@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj": {}
+    "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Data.MyShop\\Data.MyShop.csproj": {
+    "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Data.MyShop\\Data.MyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Data.MyShop\\Data.MyShop.csproj",
+        "projectUniqueName": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Data.MyShop\\Data.MyShop.csproj",
         "projectName": "Data.MyShop",
-        "projectPath": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Data.MyShop\\Data.MyShop.csproj",
+        "projectPath": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Data.MyShop\\Data.MyShop.csproj",
         "packagesPath": "C:\\Users\\Asus F15\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Data.MyShop\\obj\\",
+        "outputPath": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Data.MyShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Asus F15\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -79,14 +79,14 @@
         }
       }
     },
-    "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj": {
+    "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj",
+        "projectUniqueName": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj",
         "projectName": "Infrastructure.MyShop",
-        "projectPath": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj",
+        "projectPath": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Infrastructure.MyShop\\Infrastructure.MyShop.csproj",
         "packagesPath": "C:\\Users\\Asus F15\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Infrastructure.MyShop\\obj\\",
+        "outputPath": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Infrastructure.MyShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Asus F15\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -103,8 +103,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Data.MyShop\\Data.MyShop.csproj": {
-                "projectPath": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Data.MyShop\\Data.MyShop.csproj"
+              "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Data.MyShop\\Data.MyShop.csproj": {
+                "projectPath": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Data.MyShop\\Data.MyShop.csproj"
               }
             }
           }

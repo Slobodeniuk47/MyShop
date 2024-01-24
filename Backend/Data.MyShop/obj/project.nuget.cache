@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QxL0XVZarCVNDbF4P8U0nmEgx70JlvQAagCIHowlWehdadQeQE30r/qRGIyKKDd4fBdfuSjIez6lp1XZFwG4hg==",
+  "dgSpecHash": "Q/FUcHIj8w8ymFcyj2u8/x0Nyxfr0qwXhxA9i9vR1k4w5sy3+aDcJ1SfYViNYRuWaO5/in1IeDbVYbWAftibhQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Data.MyShop\\Data.MyShop.csproj",
+  "projectFilePath": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Data.MyShop\\Data.MyShop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus F15\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Asus F15\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

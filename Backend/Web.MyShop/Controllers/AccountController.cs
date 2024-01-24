@@ -15,18 +15,10 @@ namespace Web.MyShop.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IJwtTokenService _jwtTokenService;
-        private readonly UserManager<UserEntity> _userManager;
-        private readonly RoleManager<RoleEntity> _roleManager;
         private readonly IUserService _userService;
-        private readonly IMapper _mapper;
-        public AccountController(IJwtTokenService jwtTokenService, IUserService userService, UserManager<UserEntity> userManager, RoleManager<RoleEntity> roleManager, IMapper mapper)
+        public AccountController(IUserService userService)
         {
             _userService = userService;
-            _jwtTokenService = jwtTokenService;
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _mapper = mapper;
         }
         [HttpGet]
         [Route("get")]
@@ -60,18 +52,6 @@ namespace Web.MyShop.Controllers
         [Route("create")]
         public async Task<IActionResult> Create([FromForm] UserCreateDTO model)
         {
-            //var img = await ImageHelper.SaveImageAsync(model.Image, DirectoriesInProject.UserImages);
-
-            //var user = _mapper.Map<UserEntity>(model);
-            //user.Image = img;
-            //var result = await _userManager.CreateAsync(user, model.Password);
-            //if(result.Succeeded)
-            //{
-            //    result = await _userManager.AddToRoleAsync(user, Roles.User);
-
-            //}
-            //else return BadRequest(new { errors = result.Errors });
-            //return Ok(new { token = _jwtTokenService.CreateTokenAsync(user) });
             try
             {
                 var result = _userService.RegisterUserAsync(model).Result;
@@ -99,7 +79,7 @@ namespace Web.MyShop.Controllers
         }
         [HttpPut]
         [Route("edit")]
-        public async Task<IActionResult> Edit([FromForm] UserEditDTO model) //Have a bag! Image Delete
+        public async Task<IActionResult> Edit([FromForm] UserEditDTO model)
         {
             try
             {

@@ -11,14 +11,13 @@ namespace Infrastructure.MyShop.Interfaces
 {
     public interface ICategoryService
     {
-        Task<ServiceResponse> Create(CategoryCreateDTO model);
         Task<ServiceResponse> GetAllAsync();
-        Task<CategoryEntity> GetByIdAsync(int id);
-        Task<ServiceResponse> DeleteCategoryAsync(int id);
-        Task<ServiceResponse> GetMainCategoriesAsync();
-        Task<ServiceResponse> GetNearSubcategoriesByCategoryId(int id);
-        Task<List<CategoryItemDTO>> GetAllSubcategoriesByCategoryId(int id);
-        //public Task<ICollection<Options>> GetCategoryOptionsAsyncByCategoryId(int id);
+        Task<ServiceResponse> GetByIdAsync(int id);
+        //Task<ServiceResponse> GetMainCategoriesAsync();
+        //Task<ServiceResponse> GetNearSubcategoriesByCategoryId(int id);
+        //Task<List<CategoryItemDTO>> GetAllSubcategoriesByCategoryId(int id);
+        Task<ServiceResponse> Create(CategoryCreateDTO model);
         Task<ServiceResponse> EditCategoryAsync(CategoryEditDTO model);
+        Task<ServiceResponse> DeleteCategoryAsync(int id);
     }
 }

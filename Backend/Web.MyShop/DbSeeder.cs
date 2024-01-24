@@ -87,22 +87,22 @@ namespace Data.MyShop
                     //};
                     CategoryEntity best = new CategoryEntity()
                     {
-                        Name = "Краща ціна",
+                        Name = "The best category!",
                         ParentId = null,
-                        Description = "Для козаків",
+                        Description = "For the best products",
                         DateCreated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
-                        Image = "best.jpg"
+                        Image = "base.jpg"
                     };
                     context.Categories.Add(best);
                     context.SaveChanges();
 
                     CategoryEntity heroes = new CategoryEntity()
                     {
-                        Name = "Герої",
+                        Name = "The best category!",
                         ParentId = null,
-                        Description = "Для козаків",
+                        Description = "For the best products",
                         DateCreated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
-                        Image = "heroes.jpg"                       
+                        Image = "base.jpg"                       
                     };
                     context.Categories.Add(heroes);
                     context.SaveChanges();

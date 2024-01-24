@@ -42,38 +42,10 @@ namespace Data.MyShop.Repositories
         {
             return list.Where(i => i.Name.ToLower().Contains(name.ToLower())).ToList();
         }
-
-        //public ICollection<Product> GetProductsAsync(GetProductsVM model)
-        //{
-        //    int start = model.pageNumber * model.pageSize;
-        //    int end = model.pageSize * model.pageNumber + model.pageSize;
-        //    return FilterByName(GetByCategoryName(model.Category), model.Find).Skip(start).Take(end - start).ToList();
-        //}
         public ICollection<ProductEntity> GetProductsAsync()
         {
-            //return GetAll().Include(i => i.Category).Include(i => i.VariantProducts).ToList();
             return GetAll().Include(i => i.Category).Include(i => !i.IsDelete).ToList();
         }
-
-
-        //public async Task RemoveVariantProductsAsync(int productId)
-        //{
-        //    var vrs = await _dbContext.VariantProduct.Where(vp => vp.ProductId == productId).ToListAsync();
-        //    _dbContext.VariantProduct.RemoveRange(vrs);
-        //}
-
-        //public async Task AddVariantProductsToProductAsync(int productId, List<int> variantsIds)
-        //{
-        //    foreach (var variantId in variantsIds)
-        //    {
-        //        var real_variant = await _dbContext.Variant.FindAsync(variantId);
-
-        //        if (real_variant != null)
-        //        {
-        //            _dbContext.VariantProduct.Add(new VariantProduct { VariantId = variantId, ProductId = productId });
-        //        }
-        //    }
-        //}
 
         public async Task SaveChangesAsync()
         {

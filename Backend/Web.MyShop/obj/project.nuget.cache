@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "l6+M+8UsycFdetQFESKMQhOoYjalrtdHoPa1abfgdg4yW7+N5PGtlXgg1NQlAGxLAeZPncvk4P+E1+J6erij4w==",
+  "dgSpecHash": "VkYYOnJeh+OekBv1c416dFu/tzhkS+fqRlK90K+vv5PAw6lpGo/lYmCUVrypmpqv23VmkBhX2GEp66J+daXQVA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Asus F15\\Desktop\\SmartBuy\\MyShop\\Web.MyShop\\Web.MyShop.csproj",
+  "projectFilePath": "C:\\Users\\Asus F15\\Desktop\\MyShop\\Backend\\Web.MyShop\\Web.MyShop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus F15\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Asus F15\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
