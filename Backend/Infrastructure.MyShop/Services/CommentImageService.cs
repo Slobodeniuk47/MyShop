@@ -12,15 +12,9 @@ namespace Infrastructure.MyShop.Services
     public class CommentImageService : ICommentImageService
     {
         private readonly ICommentImageRepository _imageRepository;
-
         public CommentImageService(ICommentImageRepository commentImageRepository)
         {
             _imageRepository = commentImageRepository;
-        }
-
-        public async Task CreateCommentImageAsync(CommentImageEntity image)
-        {
-            await _imageRepository.Create(image);
         }
     }
 }

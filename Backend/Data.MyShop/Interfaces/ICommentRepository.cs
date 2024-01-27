@@ -9,6 +9,6 @@ namespace Data.MyShop.Interfaces
 {
     public interface ICommentRepository : IGenericRepository<CommentEntity, int>
     {
-        //IQueryable<CommentEntity> Comments { get; }
+        IQueryable<CommentEntity> Comments { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Data.MyShop.Entities;
 using Data.MyShop.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,16 @@ namespace Data.MyShop.Repositories
         public ProductImageRepository(ApplicationDbContext context) : base(context)
         {
         }
-
         public IQueryable<ProductImageEntity> ProductImages => GetAll();
+        public async Task<List<ProductImageEntity>> GetProductImagesByProductIdAsync(int id)
+        {
+            var productImages = await ProductImages.Where(x => x.ProductId == id).ToListAsync();
+            return productImages;
+        }
+        public async Task RemoveProductImagesByProductIdAsync(int productId)
+        {
+            var imgs = await _dbContext.ProductImages.Where(prodImg => prodImg.ProductId == productId).ToListAsync();
+            _dbContext.ProductImages.RemoveRange(imgs);
+        }
     }
 }

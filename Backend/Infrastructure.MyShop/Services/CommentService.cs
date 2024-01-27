@@ -10,6 +10,7 @@ using Infrastructure.MyShop.Interfaces;
 using Infrastructure.MyShop.Models.DTO.AccountDTO;
 using Infrastructure.MyShop.Models.DTO.CommentDTO;
 using Infrastructure.MyShop.Models.DTO.ProductDTO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,28 +25,20 @@ namespace Infrastructure.MyShop.Services
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ICommentRepository _commentRepository;
-        //private readonly IImageService _imageService;
-        private readonly UserManager<UserEntity> _userManager;
-        private readonly ICommentImageService _commentImageService;
+        private readonly ICommentRepository _commentRepository;        
+        private readonly ICommentImageRepository _commentImageRepository;
         private readonly IMapper _mapper;
 
-        public CommentService(ApplicationDbContext context, ICommentRepository commentRepository, UserManager<UserEntity> userManager, IMapper mapper, ICommentImageService commentImageService)
+        public CommentService(ApplicationDbContext context, ICommentRepository commentRepository, IMapper mapper, ICommentImageRepository commentImageRepository)
         {
             _context = context;
             _commentRepository = commentRepository;
-            _userManager = userManager;
             _mapper = mapper;
-            //_imageService = imageService;
-            _commentImageService = commentImageService;
+            _commentImageRepository = commentImageRepository;
         }
-        public async Task<IQueryable<CommentItemDTO>> GetCommentsByProductIdAsync(int id)
+        public async Task<ServiceResponse> GetCommentsByProductIdAsync(int id)
         {
-            //List<CommentEntity> comments = _commentRepository.GetAll().Where(comment => comment.ProductId == id).ToList();
-            //var comments_vms = _mapper.Map<List<CommentEntity>, List<CommentItemDTO>>(comments);
-            //return comments_vms;
-
-            var result = _commentRepository.GetAll().Where(comment => comment.ProductId == id).Select(x => new CommentItemDTO
+            var result = await _commentRepository.GetAll().Where(comment => comment.ProductId == id).Select(x => new CommentItemDTO
             {
                 Id = x.Id,
                 Title = x.Title,
@@ -60,28 +53,25 @@ namespace Infrastructure.MyShop.Services
                 ProductId = x.ProductId,
                 Images = x.CommentImages.Select(x => new CommentImageItemDTO { Id = x.Id, Name = x.Name, CommentId = x.CommentId, CommentName = x.Comment.Title }).ToList(),
                 User = new UserItemDTO { Id = x.UserId, Firstname = x.User.FirstName, Lastname = x.User.LastName, Email = x.User.Email, phoneNumber = x.User.PhoneNumber, Image = x.User.Image }
-            });
+            }).ToListAsync();
 
-            //return new ServiceResponse
-            //{
-            //    IsSuccess = true,
-            //    Payload = result
-            //};
-            return result;
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Payload = result
+            };
         }
 
 
-        public async Task<List<CommentEntity>> GetAllAsync()
+        public async Task<ServiceResponse> GetAllAsync()
         {
-            return _commentRepository.GetAll().ToList();
+            var result = await _commentRepository.GetAll().ToListAsync();
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Payload = result
+            };
         }
-
-        Task<List<CommentImageEntity>> GetCommentImagesByCommentIdAsync(int commentId)
-        {
-            var commentImages = _context.CommentImages.Where(x => x.CommentId == commentId).ToListAsync();
-            return commentImages;
-        }
-
 
         public async Task<ServiceResponse> CreateCommentAsync(CommentCreateDTO model)
         {
@@ -91,63 +81,64 @@ namespace Infrastructure.MyShop.Services
 
             if(model.Images != null)
             {
-                // Image upload
-                foreach (var img in model.Images)
+                //Save images
+                foreach (IFormFile img in model.Images)
                 {
-                    var imgTemplate = img;
-                    var imgFileName = await ImageHelper.SaveImageAsync(imgTemplate, DirectoriesInProject.CommentImages);
+                    var imgFileName = await ImageHelper.SaveImageAsync(img, DirectoriesInProject.CommentImages);
 
                     CommentImageEntity new_img_to_upload = new CommentImageEntity { Name = imgFileName, CommentId = comment.Id };
-
-
-                    await _commentImageService.CreateCommentImageAsync(new_img_to_upload);
+                    await _commentImageRepository.Create(new_img_to_upload);
                 }
             }
 
-            if (comment != null)
+            return new ServiceResponse
             {
-                return new ServiceResponse
-                {
-                    IsSuccess = true,
-                };
-            }
-            return null;
-
+                Message = "The product has been created",
+                IsSuccess = true,
+            };
         }
         public async Task<ServiceResponse> EditCommentAsync(CommentEditDTO model)
         {
             CommentEntity comment = _mapper.Map<CommentEditDTO, CommentEntity>(model);
+            comment.DateUpdated = DateTime.UtcNow;
+            if (comment != null)
+            {
+                return new ServiceResponse
+                {
+                    Message = "Comment not found",
+                    IsSuccess = true,
+                };
+            }
 
             await _commentRepository.Update(comment);
 
             if (model.Images != null)
             {
-                // Delete images
-                foreach (var img in await GetCommentImagesByCommentIdAsync(comment.Id))
+                // Delete old images
+                foreach (var img in await _commentImageRepository.GetCommentImagesByCommentIdAsync(comment.Id))
                 {
-                    comment.CommentImages.Remove(img);
                     ImageHelper.DeleteImage(img.Name, DirectoriesInProject.CommentImages);
                 }
-                // Image upload
+                await _commentImageRepository.RemoveCommentImagesByCommentIdAsync(comment.Id);
+
+                //Save new images
                 foreach (var img in model.Images)
                 {
-                    var imgTemplate = img;
-                    var imgFileName = await ImageHelper.SaveImageAsync(imgTemplate, DirectoriesInProject.CommentImages);
+                    var imgFileName = await ImageHelper.SaveImageAsync(img, DirectoriesInProject.CommentImages);
 
-                    CommentImageEntity new_img_to_upload = new CommentImageEntity { Name = imgFileName, CommentId = comment.Id };
-
-                    await _commentImageService.CreateCommentImageAsync(new_img_to_upload);
+                    CommentImageEntity new_img_to_upload = new CommentImageEntity 
+                    { 
+                        Name = imgFileName, 
+                        CommentId = comment.Id 
+                    };
+                    await _commentImageRepository.Create(new_img_to_upload);
                 }
             }
-
-            if (comment != null)
+            return new ServiceResponse
             {
-                return new ServiceResponse
-                {
-                    IsSuccess = true,
-                };
-            }
-            return null;
+                Message = "The comment has been updated successfully",
+                IsSuccess = true,
+            };
         }
 
         
@@ -165,14 +156,12 @@ namespace Infrastructure.MyShop.Services
                 };
             }
             // Delete images
-            foreach (var img in await GetCommentImagesByCommentIdAsync(comment.Id))
+            foreach (var img in await _commentImageRepository.GetCommentImagesByCommentIdAsync(comment.Id))
             {
-                    comment.CommentImages.Remove(img);
                 ImageHelper.DeleteImage(img.Name, DirectoriesInProject.CommentImages);
             }
-            //_context.Comment.Remove(comment);
-            //await _context.SaveChangesAsync();
-            _commentRepository.Delete(comment);
+            await _commentImageRepository.RemoveCommentImagesByCommentIdAsync(comment.Id);
+            await _commentRepository.Delete(comment);
             return new ServiceResponse()
             {
                 Message = "Comment has been deleted",

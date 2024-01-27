@@ -24,86 +24,44 @@ namespace Web.MyShop.Controllers
         [Route("get")]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                var result = _userService.GetAllUsersAsync().Result;
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _userService.GetAllUsersAsync().Result;
+            return Ok(result);
         }
         [HttpGet]
         [Route("get/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                var result = _userService.GetUserByIdAsync(id).Result;
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _userService.GetUserByIdAsync(id).Result;
+            return Ok(result);
         }
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create([FromForm] UserCreateDTO model)
         {
-            try
-            {
-                var result = _userService.RegisterUserAsync(model).Result;
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _userService.RegisterUserAsync(model).Result;
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromForm] LoginDTO model)
         {
-            try
-            {
-                var result = _userService.LoginUserAsync(model).Result;
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _userService.LoginUserAsync(model).Result;
+            return Ok(result);
         }
         [HttpPut]
         [Route("edit")]
         public async Task<IActionResult> Edit([FromForm] UserEditDTO model)
         {
-            try
-            {
-                var result = _userService.EditUserAsync(model).Result;
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _userService.EditUserAsync(model).Result;
+            return Ok(result);
         }
         [HttpDelete]
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                var result = _userService.DeleteUserByIdAsync(id).Result;
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _userService.DeleteUserByIdAsync(id).Result;
+            return Ok(result);
         }
     }
 }

@@ -40,17 +40,26 @@ builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
 
 //Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICommentImageRepository, CommentImageRepository>();
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
 
 //Services
 builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
+
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ICommentImageService, CommentImageService>();
+
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 //Takes away the error. One to many
@@ -159,5 +168,5 @@ foreach (var directoryName in directoriesToCreate)
 
 app.MapControllers();
 app.SeedData();
-Console.ForegroundColor = ConsoleColor.DarkYellow; Console.Write("Started"); Console.ForegroundColor = ConsoleColor.Red; Console.Write(": by Slobodeniuk Artem\n\n"); Console.ResetColor();
+Console.ForegroundColor = ConsoleColor.DarkYellow; Console.Write($"[{DateTime.UtcNow}] Started"); Console.ForegroundColor = ConsoleColor.Red; Console.Write(": by Slobodeniuk Artem\n\n"); Console.ResetColor();
 app.Run();

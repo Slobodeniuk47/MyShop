@@ -1,4 +1,5 @@
 ﻿using Data.MyShop.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Data.MyShop.Interfaces
     public interface IProductImageRepository : IGenericRepository<ProductImageEntity, int>
     {
         IQueryable<ProductImageEntity> ProductImages { get; }
+        Task<List<ProductImageEntity>> GetProductImagesByProductIdAsync(int id);
+        Task RemoveProductImagesByProductIdAsync(int productId);
     }
 }

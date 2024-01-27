@@ -9,6 +9,6 @@ namespace Infrastructure.MyShop.Interfaces
 {
     public interface ICommentImageService
     {
-        Task CreateCommentImageAsync(CommentImageEntity image);
+
     }
 }

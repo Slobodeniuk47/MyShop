@@ -13,6 +13,6 @@ namespace Data.MyShop.Repositories
         public CommentRepository(ApplicationDbContext context) : base(context)
         {
         }
-        //public IQueryable<CommentEntity> Comments => GetAll();
+        public IQueryable<CommentEntity> Comments => GetAll();
     }
 }

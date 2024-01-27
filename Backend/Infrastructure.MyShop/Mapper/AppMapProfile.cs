@@ -31,8 +31,12 @@ namespace Infrastructure.MyShop.Mapper
             CreateMap<ProductEntity, ProductItemDTO>()
                 .ForMember(x => x.CategoryName, opt => opt.MapFrom(x => x.Category.Name));
 
-            CreateMap<ProductCreateDTO, ProductEntity>()
-                .ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.CategoryId == 0 ? null : x.CategoryId));
+            CreateMap<ProductCreateDTO, ProductEntity>();
+                //.ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.CategoryId == 0 ? null : x.CategoryId));
+            CreateMap<ProductEntity, ProductCreateDTO>();
+                //.ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.CategoryId == 0 ? null : x.CategoryId));
+            CreateMap<ProductEditDTO, ProductEntity>();
+            CreateMap<ProductEntity, ProductEditDTO>();
 
             CreateMap<ProductImageEntity, ProductImageItemDTO>();
             CreateMap<ProductImageItemDTO, ProductImageEntity>();

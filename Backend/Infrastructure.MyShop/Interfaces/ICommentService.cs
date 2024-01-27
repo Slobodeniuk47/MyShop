@@ -12,12 +12,10 @@ namespace Infrastructure.MyShop.Interfaces
 {
     public interface ICommentService
     {
-        Task<List<CommentEntity>> GetAllAsync();
+        Task<ServiceResponse> GetAllAsync();
         Task<ServiceResponse> CreateCommentAsync(CommentCreateDTO comment);
         Task<ServiceResponse> DeleteCommentAsync(int id);
-        //Task<ActionResult<IEnumerable<CommentItemDTO>>> GetCommentsByProductIdAsync(int id);
         Task<ServiceResponse> EditCommentAsync(CommentEditDTO comment);
-        Task<IQueryable<CommentItemDTO>> GetCommentsByProductIdAsync(int id);
-        //Task<ServiceResponse> CanLeaveCommentAsync(CanLeaveCommentDTO model);
+        Task<ServiceResponse> GetCommentsByProductIdAsync(int id);
     }
 }

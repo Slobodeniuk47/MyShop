@@ -13,18 +13,15 @@ namespace Infrastructure.MyShop.Interfaces
 {
     public interface IProductService
     {
-        Task<ServiceResponse> GetProductAsync(string name);
-        Task<ServiceResponse> GetProductByIdAsync(int id);
-        Task<ServiceResponse> CreateProductAsync(ProductCreateDTO model);
-        Task<ServiceResponse> GetProductsAsync(ProductItemDTO model);
-        Task<ServiceResponse> GetProductCountAsync();
         Task<ServiceResponse> GetProductsAsync();
+        Task<ServiceResponse> GetProductByNameAsync(string name);
+        Task<ServiceResponse> GetProductByIdAsync(int id);
+        Task<ServiceResponse> GetProductsByCategoryId(int id);
+        Task<ServiceResponse> CreateProductAsync(ProductCreateDTO model);
+        //Task<ServiceResponse> GetProductCountAsync();
+        //Task<List<ProductImageEntity>> GetProductImagesByProductIdAsync(int id);
         Task<ServiceResponse> EditProductAsync(ProductEditDTO model);
-        //Task<ServiceResponse> GetProductByCategoryIdWithPagination(GetProductsWithPaginationAndByCategoryIdDTO model);
-        Task DeleteProductAsync(int id);
-        //Task<ServiceResponse> GetProductWithLimitByCategoryIdAsync(RecomendedProductDTO model);
-        //Task<ServiceResponse> GetProductByFiltersAsync(FilterVM model);
-        //Task<ServiceResponse> GetProductWithLimitByUserIdAsync(GetProductsWithPaginationAndByUserIdDTO model);
+        Task<ServiceResponse> DeleteProductAsync(int id);
 
     }
 }

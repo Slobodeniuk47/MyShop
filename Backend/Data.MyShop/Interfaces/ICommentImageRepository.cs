@@ -9,6 +9,8 @@ namespace Data.MyShop.Interfaces
 {
     public interface ICommentImageRepository : IGenericRepository<CommentImageEntity, int>
     {
-        //IQueryable<CommentImageEntity> CommentImages { get; }
+        IQueryable<CommentImageEntity> CommentImages { get; }
+        Task<List<CommentImageEntity>> GetCommentImagesByCommentIdAsync(int id);
+        Task RemoveCommentImagesByCommentIdAsync(int commentId);
     }
 }
