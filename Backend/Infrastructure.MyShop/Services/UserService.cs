@@ -217,20 +217,24 @@ namespace Infrastructure.MyShop.Services
                     }
                     var resultAddLogin = await _userRepository.AddLoginAsync(user, info);
                     if (!resultAddLogin.Succeeded)
+                    {
                         return new ServiceResponse
                         {
                             IsSuccess = false,
                             Message = "Something went wrong"
                         };
                     }
+                        
+                }
                 
                 var result = new { Id = user.Id, email = user.Email, firstname = user.FirstName, lastname = user.LastName, phoneNumber = user.PhoneNumber, image = user.Image };
-                    return new ServiceResponse
-                    {
-                        IsSuccess = true,
-                        Payload = result
-                    };
-                }
+                var token = await _jwtTokenService.CreateTokenAsync(user);
+                return new ServiceResponse
+                {
+                    IsSuccess = true,
+                    Payload = token
+                };
+            }
             return new ServiceResponse
             {
                 IsSuccess = false,

@@ -33,9 +33,8 @@ const LoginView = () => {
       .email("Wrong email"),
     password: yup.string().required("Enter description"),
   });
+  
   useEffect(() => {
-    console.log("-------- user effect login ---------");
-    //console.log(APP_ENV.GOOGLE_AUTH_CLIENT_ID);
     const start = () => {
       gapi.client.init({ //Init key for google
         clientId: APP_ENV.GOOGLE_AUTH_CLIENT_ID,
@@ -43,22 +42,20 @@ const LoginView = () => {
       })
     }
   }, []);
+
   const responseGoogle = (responce: GoogleLoginResponse | GoogleLoginResponseOffline) => {
     const model = {
       provider: "Google",
-      token: (responce as GoogleLoginResponse).tokenId
+      token: (responce as GoogleLoginResponse).tokenId //Google account token
     }
     setLoading(true);
     //Sends the model to the server, and the server must validate the model
     formHttp.post("api/Account/GoogleExternalLogin", model)
-      .then(x => {
-        console.log("user jwt token", x);
-        const user = x.data.payload as IUser;
-
-        localStorage.token = model.token;
+      .then(x =>
+      {
+        const user = jwtDecode(x.data.payload) as IUser;
+        localStorage.token = x.data.payload;
         
-        // http.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
-        // const user1 = jwtDecode(localStorage.token) as IUser;
         dispatch({
           type: AuthReducerActionType.LOGIN_USER,
           payload: IUserPayload(user)
@@ -67,20 +64,16 @@ const LoginView = () => {
       });
     console.log("Login google response", responce);
   }
-  const onHandleSubmit = async (values: ILogin) => {
-    console.log("Send to server", values);
-  }
   const onSubmitFormikData = async (values: ILogin) => {
     try {
       setLoading(true);
-      console.log("Send", values);
+      console.log("Send to server", values);
       const result = await http.post<IServiceResponse>("api/Account/login", values, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
       });
       const { payload } = result.data; // get param { payload } from result.data
-      //console.log(result.data.payload);
       const user = jwtDecode(payload) as IUser;
       console.log("User info", user);
       // if(user.roles == "Admin"){
@@ -93,11 +86,6 @@ const LoginView = () => {
           payload: IUserPayload(user)
         });
         navigator("/");
-      // }
-      // else{
-      //   setMessage("You are not admin!");
-      //   setLoading(false);
-      // }
     }
     catch (error) {
       setLoading(false);

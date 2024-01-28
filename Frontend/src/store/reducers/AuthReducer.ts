@@ -14,8 +14,7 @@ export const IUserPayload = (user:IUser) => {
             image: user.image,
             phoneNumber: user.phoneNumber,
             exp: user.exp,
-            roles: user.roles
-            
+            roles: user.roles// != null ? user.roles : "User"          
         } as IUser
     return payload;
 }
@@ -51,13 +50,6 @@ export const AuthReducer = (state=initState, action: any) : IAuthReducerState =>
     }
     return state;
 }
-
-
-
-
-
-
-
 
 
 // import {Dispatch} from "react";
