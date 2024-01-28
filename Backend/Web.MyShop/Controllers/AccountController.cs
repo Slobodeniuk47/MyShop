@@ -24,21 +24,21 @@ namespace Web.MyShop.Controllers
         [Route("get")]
         public async Task<IActionResult> GetAll()
         {
-            var result = _userService.GetAllUsersAsync().Result;
+            var result = await _userService.GetAllUsersAsync();
             return Ok(result);
         }
         [HttpGet]
         [Route("get/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = _userService.GetUserByIdAsync(id).Result;
+            var result = await _userService.GetUserByIdAsync(id);
             return Ok(result);
         }
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create([FromForm] UserCreateDTO model)
         {
-            var result = _userService.RegisterUserAsync(model).Result;
+            var result = await _userService.RegisterUserAsync(model);
             return Ok(result);
         }
 
@@ -46,21 +46,28 @@ namespace Web.MyShop.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromForm] LoginDTO model)
         {
-            var result = _userService.LoginUserAsync(model).Result;
+            var result = await _userService.LoginUserAsync(model);
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("GoogleExternalLogin")]
+        public async Task<IActionResult> GoogleExternalLogin([FromForm] ExternalLoginDTO model)
+        {
+            var result = await _userService.GoogleExternalLogin(model);
             return Ok(result);
         }
         [HttpPut]
         [Route("edit")]
         public async Task<IActionResult> Edit([FromForm] UserEditDTO model)
         {
-            var result = _userService.EditUserAsync(model).Result;
+            var result = await _userService.EditUserAsync(model);
             return Ok(result);
         }
         [HttpDelete]
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = _userService.DeleteUserByIdAsync(id).Result;
+            var result = await _userService.DeleteUserByIdAsync(id);
             return Ok(result);
         }
     }

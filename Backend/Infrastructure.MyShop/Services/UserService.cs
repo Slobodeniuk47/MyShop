@@ -3,10 +3,12 @@ using Azure.Core.Pipeline;
 using Data.MyShop.Constants;
 using Data.MyShop.Entities.Identity;
 using Data.MyShop.Interfaces;
+using Google.Apis.Auth;
 using Infrastructure.MyShop.Helpers;
 using Infrastructure.MyShop.Interfaces;
 using Infrastructure.MyShop.Models.DTO.AccountDTO;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Abstractions;
@@ -59,7 +61,7 @@ namespace Infrastructure.MyShop.Services
             var user = _mapper.Map<UserEntity>(model);
             user.Image = await ImageHelper.SaveImageAsync(model.Image, DirectoriesInProject.UserImages);
             
-            var result = await _userRepository.RegisterUserAsync(user, model.Password);
+            var result = await _userRepository.CreateUserAsync(user, model.Password);
             if (!result.Succeeded)
             {
                 return new ServiceResponse
@@ -168,7 +170,74 @@ namespace Infrastructure.MyShop.Services
                 IsSuccess = true,
             };
         }
+        public async Task<ServiceResponse> GoogleExternalLogin(ExternalLoginDTO model)
+        {
+            //install packet Google.Apis.Auth
+            //So that the backend checks whether the user is authorized through Google
+            var settings = new GoogleJsonWebSignature.ValidationSettings()
+            {
+                Audience = new List<string>() 
+                { 
+                    "85911906235-mpbk79c4do3jhbf2drgemm9q2n2sd6ca.apps.googleusercontent.com" 
+                }
+            };
 
+            var payload = await GoogleJsonWebSignature.ValidateAsync(model.Token, settings);
+            if (payload != null)
+            {
+                var info = new UserLoginInfo(model.Provider, payload.Subject, model.Provider);
+                var user = await _userRepository.GetUserByLoginAsync(info.LoginProvider, info.ProviderKey);
+                if (user == null)
+                {
+                    user = await _userRepository.GetUserByEmailAsync(payload.Email);
+                    if (user == null)
+                    {
+                        user = new UserEntity()
+                        {
+                            Email = payload.Email,
+                            UserName = payload.Email,
+                            FirstName = payload.GivenName,
+                            LastName = payload.FamilyName,
+                            Image = payload.Picture,
+                            PhoneNumber = payload.Prn,
+                        };
+                        var resultCreate = await _userRepository.CreateUserAsync(user);
+                        if (!resultCreate.Succeeded)
+                        {
+                            return new ServiceResponse
+                            {
+                                IsSuccess = false,
+                                Message = "Something went wrong"
+                            };
+                        }
+                        if (user.Permissions == null)
+                        {
+                            await _userRepository.AddRoleAsync(user, Roles.User);
+                        }
+                    }
+                    var resultAddLogin = await _userRepository.AddLoginAsync(user, info);
+                    if (!resultAddLogin.Succeeded)
+                        return new ServiceResponse
+                        {
+                            IsSuccess = false,
+                            Message = "Something went wrong"
+                        };
+                    }
+                
+                var result = new { Id = user.Id, email = user.Email, firstname = user.FirstName, lastname = user.LastName, phoneNumber = user.PhoneNumber, image = user.Image };
+                    return new ServiceResponse
+                    {
+                        IsSuccess = true,
+                        Payload = result
+                    };
+                }
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Something went wrong"
+            };
+
+        }
         public async Task<ServiceResponse> ConfirmEmailAsync(string userId, string token)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);

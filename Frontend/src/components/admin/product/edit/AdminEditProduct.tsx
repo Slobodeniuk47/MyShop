@@ -13,7 +13,6 @@ import { AxiosError } from "axios";
 // import add from "../../../assets/add.jpg";
 
 const AdminEditProduct = () => {
-
     const navigator = useNavigate();
     const fileSelectInputRef = useRef<HTMLInputElement>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -27,16 +26,9 @@ const AdminEditProduct = () => {
     const [imgViews, setImgViews] = useState<IProductImageItem[]>([]);
     const getProductById = () => {
         console.log("id: " + searchParams.get('id'));
-        http.get<IProductEdit>('api/product/get/' + searchParams.get('id'))
-            .then((res) => res.data)
-          .then(async (json) => {
-              
-              if (json.id == 54) {
-                  console.log("true");
-              }
-              else {
-                  console.log("false");
-              }
+        http.get("api/product/get/"+searchParams.get('id'))
+            .then(resp => {
+                const data = resp.data.payload[0];
                 setFieldValue("id", searchParams.get('id'));
                 setLoading(false);
                 //setImage(APP_ENV.BASE_URL + "images/categoryImages/" + json.image);
@@ -55,12 +47,12 @@ const AdminEditProduct = () => {
                 //     json.status = true;
                 // else if (json.status == 0)
                 //     json.status = false;
-                formik.setValues(json); //Записывает данные в форму для редактирования
-            console.log("imagesUpload ", json.imagesUpload);
+                formik.setValues(data); //Записывает данные в форму для редактирования
+            console.log("imagesUpload ", data.imagesUpload);
             // onImageChangeHandler(json.imagesUpload);
             
             // setImgViews(json.imagesUpload)
-              console.log("json: ", json);
+              console.log("data: ", data);
               // console.log("values ", values);
 
             })
@@ -76,10 +68,10 @@ const AdminEditProduct = () => {
     //     // setFieldValue('imagesId', updatedImagesId);
     // }, [images]);
     const loadMoreCategoriesAsync = async () => {
-    const result = await http.get<ICategoryItem[]>(
+    const result = await http.get(
       `${APP_ENV.BASE_URL}api/category/get`
     );
-    setList(result.data);
+    setList(result.data.payload);
   };
     useEffect(() => {
         getProductById();

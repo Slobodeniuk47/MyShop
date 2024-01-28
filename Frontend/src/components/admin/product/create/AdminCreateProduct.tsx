@@ -34,10 +34,10 @@ const AdminCreateProduct = () => {
     //     // setFieldValue('imagesId', updatedImagesId);
     // }, [images]);
     const loadMoreCategoriesAsync = async () => {
-    const result = await http.get<ICategoryItem[]>(
+    const result = await http.get(
       `${APP_ENV.BASE_URL}api/category/get`
     );
-    setList(result.data);
+    setList(result.data.payload);
   };
     useEffect(() => {
     setIsProcessing(true);

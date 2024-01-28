@@ -28,7 +28,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Web.MyShop")));
 //options.UseNpgsql(connectionString));//PostgresSql
 
-
+//Configures User Manager, Role Manager and all other Managers for working with users
 builder.Services.AddIdentity<UserEntity, RoleEntity>(options => 
 {
     options.Password.RequireDigit = false;

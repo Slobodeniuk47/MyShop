@@ -32,3 +32,6 @@ export interface ICommentImageItem {
     commentId: number | null | undefined,
     commentName: string
 }
+export interface IServiceResponse{
+    payload: ICommentItem | ICommentImageItem
+}

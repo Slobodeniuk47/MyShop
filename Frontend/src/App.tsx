@@ -20,7 +20,10 @@ function App() {
   const dispatch = useDispatch(); 
 
   useEffect(() => {
-    //
+    authCheckState();
+  },[])
+  const authCheckState = () => { 
+//
     if (isAuth) {
       if (user != undefined) {
         //token verification
@@ -33,8 +36,7 @@ function App() {
       console.log("App.tsx => useEffect: user !isAuth")
       //navigator('/login'); 
     }
-  },[])
-
+  }
   const logout = () => {
     delete http.defaults.headers.common["Authorization"];
     localStorage.removeItem("token");

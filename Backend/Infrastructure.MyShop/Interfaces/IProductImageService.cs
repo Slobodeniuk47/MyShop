@@ -9,6 +9,5 @@ namespace Infrastructure.MyShop.Interfaces
 {
     public interface IProductImageService
     {
-
     }
 }

@@ -14,8 +14,9 @@ export interface ILogin {
     email: string,
     password: string
 }
-export interface ILoginResult {
-    payload: string //Token
+
+export interface IServiceResponse {
+  payload: string
 }
 
 export interface IRegistration {

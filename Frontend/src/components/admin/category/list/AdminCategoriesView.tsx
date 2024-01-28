@@ -22,7 +22,7 @@ const AdminCategoriesView = () => {
     const loadCategories = () => {
         http.get("api/category/get")
             .then(resp => {
-                const data = resp.data;
+                const data = resp.data.payload;
 
                 setList(data);
                 setLoading(false);

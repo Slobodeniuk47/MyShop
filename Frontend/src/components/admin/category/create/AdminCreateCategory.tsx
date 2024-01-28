@@ -87,7 +87,7 @@ const AdminCreateCategory = () => {
     useEffect(() => {
         formHttp.get("api/category/get")
             .then(resp => {
-                const data = resp.data;
+                const data = resp.data.payload;
                 setList(data);
             });
     }, []);

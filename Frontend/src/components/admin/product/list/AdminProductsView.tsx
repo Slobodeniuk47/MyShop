@@ -21,7 +21,7 @@ const AdminProductsView = () => {
     const loadProducts = () => {
         http.get("api/product/get")
             .then(resp => {
-                const data = resp.data;
+                const data = resp.data.payload;
                 
                 setList(data);
                 setLoading(false);

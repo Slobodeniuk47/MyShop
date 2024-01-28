@@ -12,7 +12,6 @@ import { useEffect, useState, useRef, LegacyRef } from "react";
 import imgStar from "../../../assets/star.png"
 import imgEmptyStar from "../../../assets/emptyStar.png"
 import * as yup from "yup";
-import internal from 'stream';
 import StarComponent from '../StarComponent';
 import { AxiosError } from "axios";
 import { APP_ENV } from "../../../env";
@@ -56,7 +55,7 @@ const ProductProfile=()=>{
     const loadCommentsByProductId = () => {
         console.log("id: " + searchParams.get('id'));
         http.get('api/Comment/GetCommentsByProductId/'+ searchParams.get('id'))
-            .then((res) => res.data)
+            .then((res) => res.data.payload)
             .then(async (json) => {
                 console.log("CommentsJson", json);
                 setLoading(false);
@@ -67,17 +66,12 @@ const ProductProfile=()=>{
     const getProductById = () => {
         console.log("id: " + searchParams.get('id'));
         http.get('api/product/get/' + searchParams.get('id'))
-            .then((res) => res.data)
-          .then(async (json) => {
-              const product = json;
+            .then((res) =>
+           {
+              const product = res.data.payload[0];
                 setLoading(false);                
-                // if (json.status == 1)
-                //     json.status = true;
-                // else if (json.status == 0)
-                //     json.status = false;
-              setProduct(json);
-              console.log("imagesUpload ", json.imagesUpload);  
-              console.log("json: ", json);
+              setProduct(product);
+              console.log("json: ", product);
 
             })
     }
@@ -100,28 +94,15 @@ const ProductProfile=()=>{
         }
       return jsx_stars;
     }
-    // const createNewComment = (data: React.FormEvent<HTMLFormElement>) => {
-    //     data.preventDefault();
-    //     var curentData = new FormData(data.currentTarget);
-    //     var title = curentData?.get("Title")?.toString()!;
-    //     var text = curentData?.get("Text")?.toString()!;
-    // }
     const initValues: ICommentCreate = {
         title: '',
         message: '',
         stars: 5,
-        //discountPrice: 0,
         productId: product?.id,
         userId: 0,
         images: []
-        //priority: 0,
-        //status: true
   };
     const onSubmitFormikData = async (values: ICommentCreate) => {
-        // console.log(values);       
-        // formHttp.post('api/product/get', values, {
-        // }).then(resp => {navigator("..");})
-        // navigator("..");
         try {
         var formData = new FormData();
             formData.append("title", values.title);

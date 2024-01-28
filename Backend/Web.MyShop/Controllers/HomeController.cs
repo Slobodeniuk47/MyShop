@@ -20,7 +20,7 @@ namespace MyShop.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<WeatherForecast> Get()
         {
             var userGmail = User.Claims.FirstOrDefault().Value;

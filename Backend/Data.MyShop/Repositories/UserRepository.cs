@@ -20,15 +20,24 @@ namespace Data.MyShop.Repositories
             _userManager = userManager;
         }
 
-
+        public async Task<IdentityResult> AddLoginAsync(UserEntity user, UserLoginInfo loginInfo)
+        {
+            var result = await _userManager.AddLoginAsync(user, loginInfo);
+            return result;
+        }
         public async Task<bool> ValidateLoginAsync(string email, string password)
         {
             var result = await _userManager.CheckPasswordAsync(await _userManager.FindByEmailAsync(email), password);
             return result;
         }
-        public async Task<IdentityResult> RegisterUserAsync(UserEntity user, string password)
+        public async Task<IdentityResult> CreateUserAsync(UserEntity user, string password)
         {
             var result = await _userManager.CreateAsync(user, password);
+            return result;
+        }
+        public async Task<IdentityResult> CreateUserAsync(UserEntity user)
+        {
+            var result = await _userManager.CreateAsync(user);
             return result;
         }
 
@@ -37,7 +46,11 @@ namespace Data.MyShop.Repositories
             var result = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             return result;
         }
-
+        public async Task<UserEntity> GetUserByLoginAsync(string loginProvider, string providerKey)
+        {
+            var result = await _userManager.FindByLoginAsync(loginProvider, providerKey);
+            return result;
+        }
         public async Task<UserEntity> GetUserByIdAsync(string id)
         {
             var result = await _userManager.FindByIdAsync(id);

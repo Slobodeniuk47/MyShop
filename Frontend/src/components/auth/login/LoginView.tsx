@@ -1,15 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ILogin, ILoginResult } from "../types";
+import { ILogin, IServiceResponse } from "../types";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import classNames from "classnames";
-import { http } from "../../..//http";
+import { formHttp, http } from "../../..//http";
 import { store } from "../../../store/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { IUser } from "../types";
 import { AuthReducerActionType, IUserPayload } from "../../../store/reducers/AuthReducer";
 import jwtDecode from "jwt-decode";
+import { gapi } from "gapi-script";
+import { APP_ENV } from "../../../env";
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 
 const LoginView = () => {
 
@@ -30,12 +33,48 @@ const LoginView = () => {
       .email("Wrong email"),
     password: yup.string().required("Enter description"),
   });
+  useEffect(() => {
+    console.log("-------- user effect login ---------");
+    //console.log(APP_ENV.GOOGLE_AUTH_CLIENT_ID);
+    const start = () => {
+      gapi.client.init({ //Init key for google
+        clientId: APP_ENV.GOOGLE_AUTH_CLIENT_ID,
+        scope: ''
+      })
+    }
+  }, []);
+  const responseGoogle = (responce: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    const model = {
+      provider: "Google",
+      token: (responce as GoogleLoginResponse).tokenId
+    }
+    setLoading(true);
+    //Sends the model to the server, and the server must validate the model
+    formHttp.post("api/Account/GoogleExternalLogin", model)
+      .then(x => {
+        console.log("user jwt token", x);
+        const user = x.data.payload as IUser;
 
+        localStorage.token = model.token;
+        
+        // http.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
+        // const user1 = jwtDecode(localStorage.token) as IUser;
+        dispatch({
+          type: AuthReducerActionType.LOGIN_USER,
+          payload: IUserPayload(user)
+        });
+        navigator("/");
+      });
+    console.log("Login google response", responce);
+  }
+  const onHandleSubmit = async (values: ILogin) => {
+    console.log("Send to server", values);
+  }
   const onSubmitFormikData = async (values: ILogin) => {
     try {
       setLoading(true);
       console.log("Send", values);
-      const result = await http.post<ILoginResult>("api/Account/login", values, {
+      const result = await http.post<IServiceResponse>("api/Account/login", values, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -49,7 +88,6 @@ const LoginView = () => {
         setMessage("Welcome");
         setLoading(false);
         http.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
-        //localStorage.token = token;
         dispatch({
           type: AuthReducerActionType.LOGIN_USER,
           payload: IUserPayload(user)
@@ -141,6 +179,11 @@ const LoginView = () => {
               <Link to="/register" className="btn btn-secondary">
                 Sign up
               </Link>
+                <GoogleLogin clientId={APP_ENV.GOOGLE_AUTH_CLIENT_ID}
+                  buttonText="Login with google"
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                />
             </form>
           </div>
         </div>

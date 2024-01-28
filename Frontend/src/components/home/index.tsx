@@ -9,17 +9,20 @@ import Slider from './Slider';
 import StarComponent from './StarComponent';
 import { ICommentItem } from './ProductProfile/types';
 
+export interface ServiceResponce{
+  payload: IProductItem[]
+}
 export default function HomePage() {
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [products, setProducts] = useState<IProductItem[]>();
+  const [products, setProducts] = useState<IProductItem[]>();
     useEffect(() => {
     setLoading(true);
-    http.get<IProductItem[]>(`api/product/get`).then((resp) => {
+    http.get<ServiceResponce>(`api/product/get`).then((resp) => {
       const { data } = resp;
       //console.log("----Products---", data);
       //setHome(data);
       console.log()
-      setProducts(data);
+      setProducts(data.payload);
       setLoading(false);
     });
     }, []);

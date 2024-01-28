@@ -57,125 +57,70 @@ namespace Web.MyShop.Controllers
         [HttpPut("edit")]
         public async Task<ActionResult<IEnumerable<ProductEditDTO>>> Edit([FromForm] ProductEditDTO model)
         {
-            //var oldProduct = await _context.Products.SingleOrDefaultAsync(x => x.Id == model.Id);
-            //var product = _mapper.Map(model, oldProduct);
-            //if (product == null)
-            //    return NotFound();
-            //if (model.ImagesUpload != null)
-            //{
-            //    try
-            //    {
-            //        // Delete images
-            //        foreach (var img in await GetProductImagesByProductIdAsync(product.Id))
-            //        {
-            //            product.ProductImages.Remove(img);
-            //            ImageHelper.DeleteImage(img.Name, DirectoriesInProject.ProductImages);
-            //        }
-            //        // Save Images
-            //        foreach (IFormFile item in model.ImagesUpload)
-            //        {
-            //            string img = await ImageHelper.SaveImageAsync(item, DirectoriesInProject.ProductImages);
-            //            var productImage = new ProductImageEntity()
-            //            {
-            //                Name = img,
-            //                ProductId = product.Id
-            //            };
-            //            _context.ProductImages.Add(productImage);
-            //        }
-            //    }
-            //    catch { }         
-            //}
-            //product.DateUpdated = DateTime.UtcNow;
-
-            //await _context.SaveChangesAsync();
             var result = await _productService.EditProductAsync(model);
             return Ok(result);
         }
         [HttpDelete("deleteProduct/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-
-            //var product = await _context.Products.SingleOrDefaultAsync(x => x.Id == id);
-            //if (product == null)
-            //    return NotFound();
-            //// Delete images
-            //foreach (var img in await GetProductImagesByProductIdAsync(product.Id))
-            //{
-            //    product.ProductImages.Remove(img);
-            //    ImageHelper.DeleteImage(img.Name, DirectoriesInProject.ProductImages);
-            //}
-            //_context.Products.Remove(product);
-            //await _context.SaveChangesAsync();
             var result = await _productService.DeleteProductAsync(id);
             return Ok(result);
         }
-
-        //Task<List<ProductImageEntity>> GetProductImagesByProductIdAsync(int productId)
+        //[HttpPost("uploadProductImage")]
+        //public async Task<ActionResult<IEnumerable<ImageUploadDTO>>> UploadImage([FromForm] ImageUploadDTO model)
         //{
-        //    var productImages = _context.ProductImages.Where(x => x.ProductId == productId).ToListAsync();
-        //    return productImages;
-        //}
-        //[HttpGet("getProductImagesByProductId/{id}")]
-        //public async Task<ActionResult<IEnumerable<ProductImageItemDTO>>> GetImagesByProductId(int id)
-        //{
-        //    var result = await _productService.GetProductImagesByProductIdAsync(id);
-        //    return Ok(result);
-        //}
-        [HttpPost("uploadProductImage")]
-        public async Task<ActionResult<IEnumerable<ImageUploadDTO>>> UploadImage([FromForm] ImageUploadDTO model)
-        {
-            if (model.Image != null)
-            {
-                var entity = new ProductImageEntity();
-                try
-                {
+        //    if (model.Image != null)
+        //    {
+        //        var entity = new ProductImageEntity();
+        //        try
+        //        {
                    
-                    entity.DateCreated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-                    entity.DateUpdated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-                    entity.ProductId = model.ProductId;
+        //            entity.DateCreated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+        //            entity.DateUpdated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+        //            entity.ProductId = model.ProductId;
 
-                    var product = await _context.Products.SingleOrDefaultAsync(x => x.Id == model.ProductId);
-                    entity.Name = await ImageHelper.SaveImageAsync(model.Image, DirectoriesInProject.ProductImages);//ImageHelper.SaveAndGetImageName(model.Image, _iconfiguration, DirectoriesInProject.ProductImages);
+        //            var product = await _context.Products.SingleOrDefaultAsync(x => x.Id == model.ProductId);
+        //            entity.Name = await ImageHelper.SaveImageAsync(model.Image, DirectoriesInProject.ProductImages);
 
-                    _context.ProductImages.Add(entity);
-                    _context.SaveChanges();
-                }
-                catch { }
+        //            _context.ProductImages.Add(entity);
+        //            _context.SaveChanges();
+        //        }
+        //        catch { }
                 
 
-                return Ok(entity);
-            }
-            return BadRequest();
-        }
-        [HttpDelete("RemoveProductImage/{id}")]
-        public async Task<IActionResult> RemoveImage(int id)
-        {
-            var image = await _context.ProductImages.SingleOrDefaultAsync(x => x.Id == id);
-            var product = await _context.Products.SingleOrDefaultAsync(x => x.Id == image.ProductId);
-            ImageHelper.DeleteImage(image.Name, DirectoriesInProject.ProductImages);
+        //        return Ok(entity);
+        //    }
+        //    return BadRequest();
+        //}
+        //[HttpDelete("RemoveProductImage/{id}")]
+        //public async Task<IActionResult> RemoveImage(int id)
+        //{
+        //    var image = await _context.ProductImages.SingleOrDefaultAsync(x => x.Id == id);
+        //    var product = await _context.Products.SingleOrDefaultAsync(x => x.Id == image.ProductId);
+        //    ImageHelper.DeleteImage(image.Name, DirectoriesInProject.ProductImages);
 
-            _context.ProductImages.Remove(image);
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-        [HttpGet("getProductImages")]
-        public async Task<ActionResult<IEnumerable<ProductImageItemDTO>>> GetImages()
-        {
-            var result = await _context.ProductImages.Select(x =>
-                            new ProductImageItemDTO { Id = x.Id, Name = x.Name, ProductId = x.ProductId, ProductName = x.Product.Name }).ToListAsync();
-            return Ok(result);
-        }
-        [HttpGet("getProductImage/{id:int}")]
-        public async Task<ActionResult<IEnumerable<ProductImageItemDTO>>> GetImageById(int id)
-        {
-            var result = await _context.ProductImages.Where(x => x.Id == id).Select(x =>
-                            new ProductImageItemDTO { Id = x.Id, Name = x.Name, ProductId = x.ProductId, ProductName = x.Product.Name }).ToListAsync();
-            if (result.Count > 0)
-            {
-                return new ObjectResult(result[0]);
-            }
-            else { return NotFound(); }
-        }
+        //    _context.ProductImages.Remove(image);
+        //    await _context.SaveChangesAsync();
+        //    return Ok();
+        //}
+        //[HttpGet("getProductImages")]
+        //public async Task<ActionResult<IEnumerable<ProductImageItemDTO>>> GetImages()
+        //{
+        //    var result = await _context.ProductImages.Select(x =>
+        //                    new ProductImageItemDTO { Id = x.Id, Name = x.Name, ProductId = x.ProductId, ProductName = x.Product.Name }).ToListAsync();
+        //    return Ok(result);
+        //}
+        //[HttpGet("getProductImage/{id:int}")]
+        //public async Task<ActionResult<IEnumerable<ProductImageItemDTO>>> GetImageById(int id)
+        //{
+        //    var result = await _context.ProductImages.Where(x => x.Id == id).Select(x =>
+        //                    new ProductImageItemDTO { Id = x.Id, Name = x.Name, ProductId = x.ProductId, ProductName = x.Product.Name }).ToListAsync();
+        //    if (result.Count > 0)
+        //    {
+        //        return new ObjectResult(result[0]);
+        //    }
+        //    else { return NotFound(); }
+        //}
 
     }
 }
