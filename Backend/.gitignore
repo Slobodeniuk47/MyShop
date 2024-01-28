@@ -1,0 +1,11 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/Data.MyShop/bin
+/Data.MyShop/obj
+/Infrastructure.MyShop/bin
+/Infrastructure.MyShop/obj
+/Web.MyShop/bin
+/Web.MyShop/obj
+/Web.MyShop/Images
+.vs
