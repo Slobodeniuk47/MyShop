@@ -15,18 +15,13 @@ const AdminEditCategory = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [isLoading, setLoading] = useState<boolean>();
-    //const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
     const getCategory = () => {
         console.log("id: " + searchParams.get('id'));
         http.get("api/category/get/"+ searchParams.get('id'))
             .then(resp => {
                 const data = resp.data.payload[0];
-                // setFieldValue("id", searchParams.get('id'));
                 setLoading(false);
                 setImage(APP_ENV.BASE_URL + "images/categoryImages/" + data.image);
-                
-                //formik.setFieldValue("imageUpload", setImage(APP_ENV.BASE_URL + "images/categoryImages/" + json.image));
-                //values.imageUpload = setImage(APP_ENV.BASE_URL + "images/categoryImages/" + json.image);
                 formik.setValues(data);
                 console.log("values ", data);
 
@@ -39,9 +34,6 @@ const AdminEditCategory = () => {
             type: "text/plain"
         }),
         description: "",
-        // status: true,
-        // imgChange: false,
-        // priority: 0,
         parentId: null
     };
 
@@ -52,12 +44,7 @@ const AdminEditCategory = () => {
     });
 
     const onSubmitFormikData = (values: ICategoryEdit) => {
-        console.log(values.imageUpload);
         setLoading(true);
-        var check = "false";
-        // if (values.imgChange)
-        //     check = "true";
-        
         formHttp.put("api/category/edit", values).then(() => {
             navigator("/admin/categories");
             navigator(0);

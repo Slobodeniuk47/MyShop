@@ -29,6 +29,7 @@ const AdminCreateUser = () => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
+    role: ""
   };
   const createSchema = yup.object({
     email: yup
@@ -45,13 +46,13 @@ const AdminCreateUser = () => {
 
   const loadRoles = () => {
 
-    http.get("api/Roles")
+    http.get("api/Role/get")
       .then(resp => {
-        const data = resp.data;
+        const {payload} = resp.data;
 
-        setRoles(data);
+        setRoles(payload);
         setLoading(false);
-        console.log(data);
+        console.log(payload);
       });
   }
 

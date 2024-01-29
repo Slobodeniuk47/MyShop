@@ -5,6 +5,7 @@ using Infrastructure.MyShop.Models.DTO.AccountDTO;
 using Infrastructure.MyShop.Models.DTO.CategoryDTO;
 using Infrastructure.MyShop.Models.DTO.CommentDTO;
 using Infrastructure.MyShop.Models.DTO.ProductDTO;
+using Infrastructure.MyShop.Models.DTO.RoleDTO;
 
 namespace Infrastructure.MyShop.Mapper
 {
@@ -51,9 +52,6 @@ namespace Infrastructure.MyShop.Mapper
 
             CreateMap<UserItemDTO, UserEntity>();
             CreateMap<UserEntity, UserItemDTO>();
-
-            CreateMap<UserEditDTO, UserEntity>();
-
             //CreateMap<UserCreateDTO, UserEntity>();
             //CreateMap<UserEntity, UserCreateDTO>();
         }

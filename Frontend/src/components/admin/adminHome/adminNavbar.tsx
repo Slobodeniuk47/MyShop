@@ -81,6 +81,15 @@ import { useTypedDispatch } from "../../../store/hooks/useTypedDispatch";
                   Users
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/admin/roles"
+                >
+                  Roles
+                </Link>
+              </li>
             </ul>           
           </div>
         </div>

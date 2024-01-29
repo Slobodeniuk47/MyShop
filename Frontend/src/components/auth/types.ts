@@ -27,6 +27,7 @@ export interface IRegistration {
     phoneNumber: string,
     password: string,
     confirmPassword: string,
+    role: string | null
 }
 
 

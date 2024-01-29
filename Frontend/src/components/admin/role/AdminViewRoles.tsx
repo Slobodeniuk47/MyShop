@@ -1,27 +1,23 @@
 import { useEffect, useState } from "react";
-import { APP_ENV } from "../../../../env";
-import { http } from "../../../../http";
-import { IUserItem } from "../types";
-import { Link, useNavigate } from "react-router-dom";
-import { useTypedSelector } from "../../../../store/hooks/useTypedSelector";
-import { useDispatch, useSelector } from "react-redux";
+import { http } from "../../../http";
+import { Link } from "react-router-dom";
+import { useTypedSelector } from "../../../store/hooks/useTypedSelector";
 import { Modal } from "bootstrap"
-import AdminNavbar from "../../adminHome/adminNavbar";
+import AdminNavbar from "../adminHome/adminNavbar";
+import { IRoleItem } from "./types";
 
-const AdminUsersView = () => {
-    const [list, setList] = useState<IUserItem[]>([]);
+const AdminViewRoles = () => {
+    const [list, setList] = useState<IRoleItem[]>([]);
     const [isLoading, setLoading] = useState<boolean>(true);
     const [deleteId, setId] = useState<number>();
     const { isAuth, user } = useTypedSelector((store: any) => store.auth);
-    const navigator = useNavigate();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         loadUsers();
     }, []);
 
     const loadUsers = () => {
-        http.get("api/Account/get")
+        http.get("api/Role/get")
             .then(resp => {
                 const { payload } = resp.data;
                 console.log(payload);
@@ -33,7 +29,7 @@ const AdminUsersView = () => {
     const deleteConfirmed = () => {
         console.log(1);
 
-        http.delete('api/Account/delete/' + deleteId)
+        http.delete('api/Role/delete/' + deleteId)
             .then(() => {
                 loadUsers();
             });
@@ -59,7 +55,7 @@ const AdminUsersView = () => {
                 <div className='pageList mt-5'>
                     <div className='ListColumn'>
                         <div className='tableHeader'>
-                            <h2>Users</h2>
+                            <h2>Roles</h2>
                             <Link to="create" className='btn btn-success'>
                                 <i className='fa fa-2x fa-plus-circle'></i>
                                 <span>Add</span>
@@ -75,22 +71,7 @@ const AdminUsersView = () => {
                                         Id
                                     </th>
                                     <th>
-                                        Image
-                                    </th>
-                                    <th>
-                                        FirstName
-                                    </th>
-                                    <th>
-                                        LastName
-                                    </th>
-                                    <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        ImgName
-                                    </th>
-                                    <th>
-                                        phoneNumber
+                                        roleName
                                     </th>
                                     <th>
                                     </th>
@@ -100,7 +81,7 @@ const AdminUsersView = () => {
 
                                 {list ? (
 
-                                    list.map((item: IUserItem) => (
+                                    list.map((item: IRoleItem) => (
                                         <tr key={item.id}>
                                             <td>
                                                 <input type='checkbox' className='form-check-input'></input>
@@ -109,27 +90,12 @@ const AdminUsersView = () => {
                                                 {item.id}
                                             </td>
                                             <td>
-                                                <img src={APP_ENV.BASE_URL + 'Images/userImages/' + item.image} height={60}></img>
-                                            </td>
-                                            <td>
-                                                {item.firstname}
-                                            </td>
-                                            <td>
-                                                {item.lastname}
-                                            </td>
-                                            <td>
-                                                {item.email}
-                                            </td>
-                                            <td>
-                                                {item.image}
-                                            </td>
-                                            <td>
-                                                {item.phoneNumber}
+                                                {item.roleName}
                                             </td>
                                             <td>
                                                 {user?.roles == "Admin" ? <a onClick={() => deleteUser(item.id)} ><i className='fa fa-trash btnDelete'></i></a> : null}
                                                 
-                                                <Link to={"/admin/users/edit?id=" + item.id}><i className='fa fa-edit btnEdit'></i></Link>
+                                                <Link to={"/admin/roles/edit?id=" + item.id}><i className='fa fa-edit btnEdit'></i></Link>
                                             </td>
 
                                         </tr>
@@ -164,4 +130,4 @@ const AdminUsersView = () => {
         </div>
     );
 };
-export default AdminUsersView;
+export default AdminViewRoles;

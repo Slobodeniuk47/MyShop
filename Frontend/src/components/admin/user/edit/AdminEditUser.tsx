@@ -30,7 +30,8 @@ const AdminEditUser = () => {
     lastName: "",
     phoneNumber: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    role: "",
   };
   const createSchema = yup.object({
     email: yup
@@ -45,28 +46,30 @@ const AdminEditUser = () => {
   const getUsers = () => {
     console.log("id: " + searchParams.get('id'));
     http.get('api/Account/get/' + searchParams.get('id'))
-      .then((res) => res.data)
-      .then(async (json) => {
-        setLoading(false);
-        setImage(APP_ENV.BASE_URL + "Images/userImages/" + json.image)
-        // if (json.status == 1)
-        //   json.status = true;
-        // else if (json.status == 0)
-        //   json.status = false;
-        formik.setValues(json);
-        console.log("values ", values);
-
+      .then((res) =>
+      {
+        {
+          var { payload } = res.data;
+          setLoading(false);
+          setImage(APP_ENV.BASE_URL + "Images/userImages/" + payload.image)
+          // if (json.status == 1)
+          //   json.status = true;
+          // else if (json.status == 0)
+          //   json.status = false;
+          formik.setValues(payload);
+          console.log("values ", values);
+        }
       })
   }
 
   const loadRoles = () => {
 
-    http.get("api/Roles")
+    http.get("api/Role/get")
       .then(resp => {
-        const data = resp.data;
+        const {payload} = resp.data;
 
-        setRoles(data);
-        console.log(data);
+        setRoles(payload);
+        console.log(payload);
       });
   }
 

@@ -11,12 +11,12 @@ namespace Infrastructure.MyShop.Interfaces
     public interface IUserService
     {
         Task<ServiceResponse> GetAllUsersAsync();
-        Task<ServiceResponse> GetUserByIdAsync(int id);
+        Task<ServiceResponse> GetUserByIdAsync(long id);
         Task<ServiceResponse> RegisterUserAsync(UserCreateDTO model);
         Task<ServiceResponse> LoginUserAsync(LoginDTO model);
         Task<ServiceResponse> GoogleExternalLogin(ExternalLoginDTO model);
         Task<ServiceResponse> ConfirmEmailAsync(string userId, string token);
         Task<ServiceResponse> EditUserAsync(UserEditDTO model);
-        Task<ServiceResponse> DeleteUserByIdAsync(int id);
+        Task<ServiceResponse> DeleteUserByIdAsync(long id);
     }
 }

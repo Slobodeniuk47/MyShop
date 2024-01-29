@@ -75,7 +75,7 @@ namespace Data.MyShop.Repositories
             return result;
         }
 
-        async Task<IList<string>> IUserRepository.GetRolesAsync(UserEntity user)
+        public async Task<IList<string>> GetRolesAsync(UserEntity user)
         {
             var result = await _userManager.GetRolesAsync(user);
             return result;
@@ -87,26 +87,26 @@ namespace Data.MyShop.Repositories
             return result;
         }
 
-        public async Task<UserEntity> UpdateUserAsync(UserEntity user)
+        public async Task<IdentityResult> UpdateUserAsync(UserEntity user)
         {
-            await _userManager.UpdateAsync(user);
-            return user;
+            var result = await _userManager.UpdateAsync(user);
+            return result;
         }
 
-        public async Task<UserEntity> AddRoleAsync(UserEntity user, string role)
+        public async Task<IdentityResult> AddRoleAsync(UserEntity user, string role)
         {
-            await _userManager.AddToRoleAsync(user, role);
-            return user;
+            var result = await _userManager.AddToRoleAsync(user, role);
+            return result;
         }
-        public async Task<UserEntity> RemoveRoleAsync(UserEntity user, IList<string> role)
+        public async Task<IdentityResult> RemoveRolesAsync(UserEntity user, IList<string> role)
         {
-            await _userManager.RemoveFromRolesAsync(user, role);
-            return user;
+            var result = await _userManager.RemoveFromRolesAsync(user, role);
+            return result;
         }
-        public async Task<UserEntity> DeleteUserAsync(UserEntity user)
+        public async Task<IdentityResult> DeleteUserAsync(UserEntity user)
         {
-            await _userManager.DeleteAsync(user);
-            return user;
+            var result = await _userManager.DeleteAsync(user);
+            return result;
         }
     }
 }

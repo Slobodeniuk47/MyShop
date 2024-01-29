@@ -28,14 +28,12 @@ namespace Infrastructure.MyShop.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private IConfiguration _configuration;
         private IJwtTokenService _jwtTokenService;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IJwtTokenService jwtTokenService, IConfiguration configuration, IMapper mapper)
+        public UserService(IUserRepository userRepository, IJwtTokenService jwtTokenService, IMapper mapper)
         {
             _userRepository = userRepository;
-            _configuration = configuration;
             _jwtTokenService = jwtTokenService;
             _mapper = mapper;
         }
@@ -116,7 +114,7 @@ namespace Infrastructure.MyShop.Services
                 {
                     
                     var oldRoles = await _userRepository.GetRolesAsync(oldUser);
-                    await _userRepository.RemoveRoleAsync(user, oldRoles);
+                    await _userRepository.RemoveRolesAsync(user, oldRoles);
 
                     var role = model.Role != null ? model.Role : Roles.User;
                     await _userRepository.AddRoleAsync(user, role);
@@ -199,7 +197,7 @@ namespace Infrastructure.MyShop.Services
                             FirstName = payload.GivenName,
                             LastName = payload.FamilyName,
                             Image = payload.Picture,
-                            PhoneNumber = payload.Prn,
+                            //PhoneNumber = payload.Prn
                         };
                         var resultCreate = await _userRepository.CreateUserAsync(user);
                         if (!resultCreate.Succeeded)
@@ -291,7 +289,7 @@ namespace Infrastructure.MyShop.Services
                 Payload = users
             };
         }
-        public async Task<ServiceResponse> GetUserByIdAsync(int id)
+        public async Task<ServiceResponse> GetUserByIdAsync(long id)
         {
             var users = _userRepository.GetAllUsersAsync().Result.Where(user => user.Id == id)
             .Select(user => new UserItemDTO
@@ -320,7 +318,7 @@ namespace Infrastructure.MyShop.Services
                 IsSuccess = false,
             };            
         }
-        public async Task<ServiceResponse> DeleteUserByIdAsync(int id)
+        public async Task<ServiceResponse> DeleteUserByIdAsync(long id)
         {
             var user = await _userRepository.GetUserByIdAsync(id.ToString());
             if (user != null) 
@@ -331,7 +329,7 @@ namespace Infrastructure.MyShop.Services
                 return new ServiceResponse()
                 {
                     IsSuccess = false,
-                    Message = "User was delete"
+                    Message = "The User has been deleted"
                 };
             }         
             return new ServiceResponse()

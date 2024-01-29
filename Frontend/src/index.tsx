@@ -26,6 +26,9 @@ import ProfilePage  from "./components/profile/index";
 import ProductProfile from './components/home/ProductProfile/ProductProfile'
 import AdminUsersView from './components/admin/user/list/AdminUsersView';
 import AdminEditUser from './components/admin/user/edit/AdminEditUser';
+import AdminViewRoles from './components/admin/role/AdminViewRoles';
+import AdminEditRole from './components/admin/role/AdminEditRole';
+import AdminCreateRole from './components/admin/role/AdminCreateRole';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -62,6 +65,11 @@ root.render(
             <Route index element={<AdminUsersView/>} />
             <Route path="create" element={<AdminCreateUser/>} />
             <Route path="edit" element={<AdminEditUser />} />
+          </Route>
+          <Route path='roles'>
+            <Route index element={<AdminViewRoles/>} />
+            <Route path="create" element={<AdminCreateRole/>} />
+            <Route path="edit" element={<AdminEditRole />} />
           </Route>
         </Route>
         <Route path="/" element={<App />}>

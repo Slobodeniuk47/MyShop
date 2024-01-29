@@ -29,7 +29,7 @@ namespace Web.MyShop.Controllers
         }
         [HttpGet]
         [Route("get/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(long id)
         {
             var result = await _userService.GetUserByIdAsync(id);
             return Ok(result);
@@ -65,7 +65,7 @@ namespace Web.MyShop.Controllers
         }
         [HttpDelete]
         [Route("delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(long id)
         {
             var result = await _userService.DeleteUserByIdAsync(id);
             return Ok(result);

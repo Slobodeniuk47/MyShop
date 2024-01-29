@@ -16,16 +16,16 @@ namespace Data.MyShop.Interfaces
         Task<UserEntity> GetUserByIdAsync(string id);
         Task<UserEntity> GetUserByLoginAsync(string loginProvider, string providerKey);
         Task<IdentityResult> AddLoginAsync(UserEntity user, UserLoginInfo loginInfo);
-        Task<UserEntity> UpdateUserAsync(UserEntity model);
+        Task<IdentityResult> UpdateUserAsync(UserEntity model);
         Task<UserEntity> GetUserByEmailAsync(string email);
         Task<IList<string>> GetRolesAsync(UserEntity model);
         Task<IdentityResult> ConfirmEmailAsync(UserEntity model, string token);
         Task<string> GeneratePasswordResetTokenAsync(UserEntity model);
         Task<string> GenerateEmailConfirmationTokenAsync(UserEntity appUser);
         Task<List<UserEntity>> GetAllUsersAsync();
-        Task<UserEntity> AddRoleAsync(UserEntity model, string role);
-        Task<UserEntity> RemoveRoleAsync(UserEntity model, IList<string> role);
-        Task<UserEntity> DeleteUserAsync(UserEntity user);
+        Task<IdentityResult> AddRoleAsync(UserEntity model, string role);
+        Task<IdentityResult> RemoveRolesAsync(UserEntity model, IList<string> role);
+        Task<IdentityResult> DeleteUserAsync(UserEntity user);
 
     }
 }

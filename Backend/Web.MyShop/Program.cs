@@ -40,6 +40,7 @@ builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
 
 //Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
@@ -51,6 +52,7 @@ builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
 
 //Services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 

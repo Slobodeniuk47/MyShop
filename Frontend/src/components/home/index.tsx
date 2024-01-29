@@ -50,7 +50,7 @@ export default function HomePage() {
                   <div className='pageList mt-5 mb-5'>
                       
                       <h1 className="text-center">Products</h1>
-      <div className="row ">
+      <div className="row" style={{marginLeft: 200}}>
         {products?.map((product) => (
           <div className="card col-md-2 h-150 mt-5">
             
@@ -77,7 +77,7 @@ export default function HomePage() {
               className=""
               alt="Козачка"
             />
-            <div className="card-body">
+            <div className="card-body" style={{width: 360, height: 360}}>
               <p>{product.dateCreated}</p>
               <h5 className="card-title">[{product.id}]{product.name}</h5>
               <p className="card-text">[Id]CategoryName: [{product.categoryId}]{product.categoryName}</p>

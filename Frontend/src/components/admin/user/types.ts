@@ -1,3 +1,6 @@
+export interface IPermissions {
+    roleName: string;
+}
 export interface IUserItem {
     id: number;
     email: string;
@@ -5,10 +8,7 @@ export interface IUserItem {
     lastname: string;
     image: string;
     phoneNumber: string;
-    roles: string;
-}
-export interface IUserResult {
-    payload: IUserItem[]
+    permissions: IPermissions[];
 }
 export interface IEditUser {
     id: number,
@@ -19,4 +19,5 @@ export interface IEditUser {
     phoneNumber: string,
     password: string,
     confirmPassword: string,
+    role: string,
 }

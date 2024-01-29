@@ -19,8 +19,8 @@ const RegistrationView = () => {
     image: "",
     phoneNumber: "",
     password: "",
-    confirmPassword: ""
-
+    confirmPassword: "",
+    role: null
   };
   const [message, setMessage] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>();
