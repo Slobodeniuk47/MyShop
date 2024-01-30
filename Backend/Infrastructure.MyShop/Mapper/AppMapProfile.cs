@@ -52,6 +52,8 @@ namespace Infrastructure.MyShop.Mapper
 
             CreateMap<UserItemDTO, UserEntity>();
             CreateMap<UserEntity, UserItemDTO>();
+
+            CreateMap<UserEditDTO, UserEntity>();
             //CreateMap<UserCreateDTO, UserEntity>();
             //CreateMap<UserEntity, UserCreateDTO>();
         }

@@ -106,7 +106,7 @@ const AdminUsersView = () => {
                                                 <input type='checkbox' className='form-check-input'></input>
                                             </td>
                                             <td>
-                                                {item.id}
+                                                {item.id} [{item.permissions[0].roleName}]
                                             </td>
                                             <td>
                                                 <img src={APP_ENV.BASE_URL + 'Images/userImages/' + item.image} height={60}></img>

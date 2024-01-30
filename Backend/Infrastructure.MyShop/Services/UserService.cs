@@ -60,6 +60,7 @@ namespace Infrastructure.MyShop.Services
             user.Image = await ImageHelper.SaveImageAsync(model.Image, DirectoriesInProject.UserImages);
             
             var result = await _userRepository.CreateUserAsync(user, model.Password);
+            
             if (!result.Succeeded)
             {
                 return new ServiceResponse
@@ -97,14 +98,7 @@ namespace Infrastructure.MyShop.Services
                         IsSuccess = false
                     };
                 }
-                if (model.Password != model.ConfirmPassword)
-                {
-                    return new ServiceResponse
-                    {
-                        Message = "Passwords do not match!",
-                        IsSuccess = false,
-                    };
-                }
+
                 if (model.ImageUpload != null)
                 {
                     ImageHelper.DeleteImage(oldUser.Image, DirectoriesInProject.UserImages);

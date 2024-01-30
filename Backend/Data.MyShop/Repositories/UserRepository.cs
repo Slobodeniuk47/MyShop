@@ -19,7 +19,11 @@ namespace Data.MyShop.Repositories
         {
             _userManager = userManager;
         }
-
+        public async Task<IdentityResult> ChangePasswordAsync(UserEntity user, string currentPass, string newPass)
+        {
+            var result = await _userManager.ChangePasswordAsync(user, currentPass, newPass);
+            return result;
+        }
         public async Task<IdentityResult> AddLoginAsync(UserEntity user, UserLoginInfo loginInfo)
         {
             var result = await _userManager.AddLoginAsync(user, loginInfo);

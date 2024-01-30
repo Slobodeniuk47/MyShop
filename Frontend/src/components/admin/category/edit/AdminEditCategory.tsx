@@ -15,9 +15,9 @@ const AdminEditCategory = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [isLoading, setLoading] = useState<boolean>();
-    const getCategory = () => {
+    const loadingCategoryOnFormik = () => {
         console.log("id: " + searchParams.get('id'));
-        http.get("api/category/get/"+ searchParams.get('id'))
+        formHttp.get("api/category/get/"+ searchParams.get('id'))
             .then(resp => {
                 const data = resp.data.payload[0];
                 setLoading(false);
@@ -81,15 +81,12 @@ const AdminEditCategory = () => {
         }   
     }
     useEffect(() => {
-        //getCategory();
-        
         formHttp.get("api/category/get")
             .then(resp => {
-                const data = resp.data.payload;               
-                setList(data);
-                getCategory();
-                
+                const data = resp.data.payload;
+                setList(data);                
             });
+        loadingCategoryOnFormik();
     }, []);
 
     return (

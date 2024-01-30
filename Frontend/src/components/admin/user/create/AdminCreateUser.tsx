@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import classNames from "classnames";
 import { formHttp, http } from "../../../../http";
 import { useState, ChangeEvent, useEffect } from "react";
+import { IRoleItem } from "../../role/types";
 
 const AdminCreateUser = () => {
 
@@ -19,7 +20,7 @@ const AdminCreateUser = () => {
   const [message, setMessage] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>();
   const [image, setImage] = useState<string>();
-  const [roles, setRoles] = useState<string[]>([]);
+  const [roles, setRoles] = useState<IRoleItem[]>([]);
 
   const initValues: IRegistration = {
     email: "",
@@ -41,7 +42,8 @@ const AdminCreateUser = () => {
     confirmPassword: yup.string().required("Confirm password").oneOf([yup.ref('password'), ""], 'Passwords must match'),
     image: yup.mixed().required("Choose image"),
     firstName: yup.string().required("Enter Firstname").min(2),
-    lastName: yup.string().required("Enter Lastname").min(2)
+    lastName: yup.string().required("Enter Lastname").min(2),
+    phoneNumber: yup.string().required("Enter Lastname").min(10),
   });
 
   const loadRoles = () => {
@@ -77,7 +79,7 @@ const AdminCreateUser = () => {
       setLoading(true);
       console.log("Send", values);
 
-      const result = await formHttp.post("api/Users/create", values);
+      const result = await formHttp.post("api/Account/create", values);
       navigator("..");
     }
     catch (error) {
@@ -192,6 +194,24 @@ const AdminCreateUser = () => {
               {errors.lastName && touched.lastName && (
                 <div className="invalid-feedback">{errors.lastName}</div>
               )}
+              </div>
+              <div className="mb-2">
+              <label htmlFor="lastName" className="form-label">
+                Phone number
+              </label>
+              <input
+                type="text"
+                className={classNames("form-control", {
+                  "is-invalid": errors.phoneNumber && touched.phoneNumber,
+                })}
+                id="phoneNumber"
+                name="phoneNumber"
+                value={values.phoneNumber}
+                onChange={handleChange}
+              />
+              {errors.phoneNumber && touched.phoneNumber && (
+                <div className="invalid-feedback">{errors.phoneNumber}</div>
+              )}
             </div>
             <div className="mb-2">
               <label htmlFor="password" className="form-label">
@@ -236,7 +256,7 @@ const AdminCreateUser = () => {
                 <option value="None">None</option>
                 {roles.map(item => {
                   return (
-                    <option value={item} >{item}</option>
+                    <option value={item.roleName} >{item.roleName}</option>
                   )
                 })}
               </select>

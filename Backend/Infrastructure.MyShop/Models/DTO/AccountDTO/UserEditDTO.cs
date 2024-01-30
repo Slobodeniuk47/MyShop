@@ -15,8 +15,6 @@ namespace Infrastructure.MyShop.Models.DTO.AccountDTO
         public string Lastname { get; set; }
         public IFormFile ImageUpload { get; set; }
         public string phoneNumber { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
         public string? Role { get; set; }
     }
 }

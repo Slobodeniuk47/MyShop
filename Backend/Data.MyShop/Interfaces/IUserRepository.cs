@@ -10,6 +10,7 @@ namespace Data.MyShop.Interfaces
 {
     public interface IUserRepository
     {
+        Task<IdentityResult> ChangePasswordAsync(UserEntity user, string currentPass, string newPass);
         Task<IdentityResult> CreateUserAsync(UserEntity user, string password);
         Task<IdentityResult> CreateUserAsync(UserEntity user);
         Task<bool> ValidateLoginAsync(string email, string password);

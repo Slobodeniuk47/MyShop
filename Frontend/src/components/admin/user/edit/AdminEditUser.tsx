@@ -5,7 +5,8 @@ import classNames from "classnames";
 import { formHttp, http } from "../../../../http";
 import { useState, ChangeEvent, useEffect } from "react";
 import { APP_ENV } from "../../../../env";
-import { IEditUser } from "../types";
+import { IEditUser, IPermissions } from "../types";
+import { IRoleItem } from "../../role/types";
 
 const AdminEditUser = () => {
 
@@ -14,36 +15,37 @@ const AdminEditUser = () => {
   useEffect(() => {
     setLoading(true);
     loadRoles();
-    getUsers();
+    loadingUserOnFormik();
   }, [])
   const [searchParams, setSearchParams] = useSearchParams();
   const [message, setMessage] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>();
   const [image, setImage] = useState<string>();
-  const [roles, setRoles] = useState<string[]>([]);
+  const [roles, setRoles] = useState<IPermissions[]>([]);
 
   const initValues: IEditUser = {
     id: 0,
     email: "",
     image: "",
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     phoneNumber: "",
     password: "",
     confirmPassword: "",
     role: "",
   };
   const createSchema = yup.object({
-    email: yup
-      .string()
-      .required("Enter name")
-      .email("Wrong email"),
-    image: yup.mixed().required("Choose image"),
-    firstName: yup.string().required("Enter Firstname").min(2),
-    lastName: yup.string().required("Enter Lastname").min(2)
+    // email: yup
+    //   .string()
+    //   .required("Enter name")
+    //   .email("Wrong email"),
+    // image: yup.mixed().required("Choose image"),
+    // firstName: yup.string().required("Enter Firstname").min(2),
+    // lastName: yup.string().required("Enter Lastname").min(2),
+    // phoneNumber: yup.string().required("Enter Lastname").min(10),
   });
 
-  const getUsers = () => {
+  const loadingUserOnFormik = () => {
     console.log("id: " + searchParams.get('id'));
     http.get('api/Account/get/' + searchParams.get('id'))
       .then((res) =>
@@ -52,12 +54,9 @@ const AdminEditUser = () => {
           var { payload } = res.data;
           setLoading(false);
           setImage(APP_ENV.BASE_URL + "Images/userImages/" + payload.image)
-          // if (json.status == 1)
-          //   json.status = true;
-          // else if (json.status == 0)
-          //   json.status = false;
           formik.setValues(payload);
-          console.log("values ", values);
+          formik.setFieldValue("role", payload.permissions[0].roleName); //Init role on the formik
+          console.log("payload ", payload);
         }
       })
   }
@@ -70,6 +69,7 @@ const AdminEditUser = () => {
 
         setRoles(payload);
         console.log(payload);
+        
       });
   }
 
@@ -168,15 +168,15 @@ const changeImage = (event: ChangeEvent<HTMLInputElement>) => {
               <input
                 type="text"
                 className={classNames("form-control", {
-                  "is-invalid": errors.firstName && touched.firstName,
+                  "is-invalid": errors.firstname && touched.firstname,
                 })}
-                id="firstName"
-                name="firstName"
-                value={values.firstName}
+                id="firstname"
+                name="firstname"
+                value={values.firstname}
                 onChange={handleChange}
               />
-              {errors.firstName && touched.firstName && (
-                <div className="invalid-feedback">{errors.firstName}</div>
+              {errors.firstname && touched.firstname && (
+                <div className="invalid-feedback">{errors.firstname}</div>
               )}
             </div>
             <div className="mb-2">
@@ -186,25 +186,43 @@ const changeImage = (event: ChangeEvent<HTMLInputElement>) => {
               <input
                 type="text"
                 className={classNames("form-control", {
-                  "is-invalid": errors.lastName && touched.lastName,
+                  "is-invalid": errors.lastname && touched.lastname,
                 })}
-                id="lastName"
-                name="lastName"
-                value={values.lastName}
+                id="lastname"
+                name="lastname"
+                value={values.lastname}
                 onChange={handleChange}
               />
-              {errors.lastName && touched.lastName && (
-                <div className="invalid-feedback">{errors.lastName}</div>
+              {errors.lastname && touched.lastname && (
+                <div className="invalid-feedback">{errors.lastname}</div>
+              )}
+              </div>
+              <div className="mb-2">
+              <label htmlFor="lastName" className="form-label">
+                Phone number
+              </label>
+              <input
+                type="text"
+                className={classNames("form-control", {
+                  "is-invalid": errors.phoneNumber && touched.phoneNumber,
+                })}
+                id="phoneNumber"
+                name="phoneNumber"
+                value={values.phoneNumber}
+                onChange={handleChange}
+              />
+              {errors.phoneNumber && touched.phoneNumber && (
+                <div className="invalid-feedback">{errors.phoneNumber}</div>
               )}
             </div>
             
             <div className="mb-3">
               <label htmlFor="role" className="form-label">Role</label>
-              <select className="form-select" aria-label="Default select example" id="role" name="role" value="---{values.role}---" onChange={handleChange} >
+              <select className="form-select" aria-label="Default select example" id="role" name="role" value={values.role} onChange={handleChange} >
                 <option value="None">None</option>
                 {roles.map(item => {
                   return (
-                    <option value={item} >{item}</option>
+                    <option value={item.roleName} >{item.roleName}</option>
                   )
                 })}
               </select>

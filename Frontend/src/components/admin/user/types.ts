@@ -13,8 +13,8 @@ export interface IUserItem {
 export interface IEditUser {
     id: number,
     email: string,
-    firstName: string,
-    lastName: string,
+    firstname: string,
+    lastname: string,
     image: File | string,
     phoneNumber: string,
     password: string,
