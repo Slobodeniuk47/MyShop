@@ -23,11 +23,11 @@ namespace Infrastructure.MyShop.Services
         }
         public async Task<ServiceResponse> GetAllRolesAsync()
         {
-            var result = await _roleRepository.Roles.Select(user => new RoleItemDTO
+            var result = await _roleRepository.Roles.Select(role => new RoleItemDTO
             {
-                Id = user.Id,
-                RoleName = user.Name,
-                ConcurrencyStamp = user.ConcurrencyStamp
+                Id = role.Id,
+                RoleName = role.Name,
+                ConcurrencyStamp = role.ConcurrencyStamp
             }).ToListAsync();
             return new ServiceResponse()
             {
@@ -38,11 +38,11 @@ namespace Infrastructure.MyShop.Services
         }
         public async Task<ServiceResponse> GetRoleByIdAsync(long id)
         {
-            var result = await _roleRepository.Roles.Where(role => role.Id == id).Select(user => new RoleItemDTO
+            var result = await _roleRepository.Roles.Where(role => role.Id == id).Select(role => new RoleItemDTO
             {
-                Id = user.Id,
-                RoleName = user.Name,
-                ConcurrencyStamp = user.ConcurrencyStamp
+                Id = role.Id,
+                RoleName = role.Name,
+                ConcurrencyStamp = role.ConcurrencyStamp
             }).ToListAsync();
             return new ServiceResponse()
             {

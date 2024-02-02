@@ -7,7 +7,7 @@ import { http } from "../../http";
 import { APP_ENV } from "../../env";
 import Slider from './Slider';
 import StarComponent from './StarComponent';
-import { ICommentItem } from './ProductProfile/types';
+import { ICommentItem } from './productProfile/types';
 
 export interface ServiceResponce{
   payload: IProductItem[]
@@ -53,43 +53,30 @@ export default function HomePage() {
       <div className="row" style={{marginLeft: 200}}>
         {products?.map((product) => (
           <div className="card col-md-2 h-150 mt-5">
-            
-            {/* <div className="card width: 18rem;">
-              <img className="card-img-top" style={{ width: "100%", height: "100px", objectFit: "contain" }} src={`${APP_ENV.BASE_URL}Images/productImages/${product.images[0].name}`} alt="Card image cap"/>
-              <div className="card-body">
-                <h5 className="card-title">[{product.id}]{product.name}</h5>
-              <p className="card-text">[Id]CategoryName: [{product.categoryId}]{product.categoryName}</p>
-              <div>Comments: { product.comments.length}</div>
-              <div><StarComponent Count={5} Rating={getProductRating(product.comments)} /></div>
-              
-                    <p className="card-text"><h1>{product.price}$</h1></p>
-              <p className="card-text">Description: <small>{product.description}</small></p>
-              <div>
-                <Link to={"/product?id=" + product.id}><i className='fa fa-edit btnEdit'></i></Link>
-              </div>
-                <a href={`/product?id=${product.id}`} className="btn btn-primary">Comments</a>
-              </div>
-            </div> */}
-          
+            <Link to={"/product?id=" + product.id} style={{textDecoration:"none", color: 'black'}}><i className='fa fa-heart'></i></Link>
+            <Link to={"/product?id=" + product.id} style={{textDecoration:"none", color: 'black'}}><i className='fa fa-heart-o'></i></Link>
             <img 
               style={{ width: "100%", height: "120px", objectFit: "contain" }}
               src={`${APP_ENV.BASE_URL}Images/productImages/${product.images[0].name}`}
               className=""
-              alt="Козачка"
+              alt="productImage"
             />
             <div className="card-body" style={{width: 360, height: 360}}>
               <p>{product.dateCreated}</p>
               <h5 className="card-title">[{product.id}]{product.name}</h5>
-              <p className="card-text">[Id]CategoryName: [{product.categoryId}]{product.categoryName}</p>
-              <div>Comments: { product.comments.length}</div>
-              <div><StarComponent Count={5} Rating={getProductRating(product.comments)} /></div>
+              <p className="card-text"> [{product.categoryId}]{product.categoryName}</p>
+              <Link to={"/product?id=" + product.id} style={{textDecoration:"none", color: 'black'}}>
+                {product.comments.length} <i className='fa fa-comments'></i>
+                <StarComponent Count={5} Rating={getProductRating(product.comments)}/>
+              </Link>
+              {/* <Link to={"/product?id=" + product.id} style={{textDecoration:"none", color: 'black'}}>{product.comments.length} <i className='fa fa-comments'></i></Link>
+              <StarComponent LinkTo={"/product?id=" + product.id}  Count={5} Rating={getProductRating(product.comments)} /> */}
               
-                    <p className="card-text"><h1>{product.price}$</h1></p>
+              <p className="card-text"><h1>{product.price}$</h1></p>
               <p className="card-text">Description: <small>{product.description}</small></p>
-              <div>
-                <Link to={"/product?id=" + product.id}><i className='fa fa-edit btnEdit'></i></Link>
-              </div>
-                <a href={`/product?id=${product.id}`} className="btn btn-primary">Comments</a>
+              {/* <Link className='fa fa-shopping-cart' to="/basket" style={{ textDecoration: "none", color: 'black' }}>
+              </Link> */}
+              <a href={`/cart`} className="btn btn-primary">Add to cart <i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
               </div>
           </div>
         ))}

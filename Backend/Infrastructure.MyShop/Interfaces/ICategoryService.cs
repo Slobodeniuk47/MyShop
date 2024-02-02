@@ -13,7 +13,7 @@ namespace Infrastructure.MyShop.Interfaces
     {
         Task<ServiceResponse> GetAllAsync();
         Task<ServiceResponse> GetByIdAsync(int id);
-        //Task<ServiceResponse> GetMainCategoriesAsync();
+        Task<ServiceResponse> GetMainCategoriesAsync();
         //Task<ServiceResponse> GetNearSubcategoriesByCategoryId(int id);
         //Task<List<CategoryItemDTO>> GetAllSubcategoriesByCategoryId(int id);
         Task<ServiceResponse> Create(CategoryCreateDTO model);

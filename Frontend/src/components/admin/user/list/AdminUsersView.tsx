@@ -106,7 +106,7 @@ const AdminUsersView = () => {
                                                 <input type='checkbox' className='form-check-input'></input>
                                             </td>
                                             <td>
-                                                {item.id} [{item.permissions[0].roleName}]
+                                                {item.id} [{ item.permissions[0] != null ? item.permissions[0].roleName : "None"}]
                                             </td>
                                             <td>
                                                 <img src={APP_ENV.BASE_URL + 'Images/userImages/' + item.image} height={60}></img>
@@ -127,7 +127,7 @@ const AdminUsersView = () => {
                                                 {item.phoneNumber}
                                             </td>
                                             <td>
-                                                {user?.roles == "Admin" ? <a onClick={() => deleteUser(item.id)} ><i className='fa fa-trash btnDelete'></i></a> : null}
+                                                <a onClick={() => deleteUser(item.id)} ><i className='fa fa-trash btnDelete'></i></a>
                                                 
                                                 <Link to={"/admin/users/edit?id=" + item.id}><i className='fa fa-edit btnEdit'></i></Link>
                                             </td>

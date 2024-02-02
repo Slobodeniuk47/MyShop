@@ -10,6 +10,7 @@ using Infrastructure.MyShop.Models.DTO.AccountDTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Abstractions;
 using Microsoft.IdentityModel.Tokens;
@@ -191,7 +192,6 @@ namespace Infrastructure.MyShop.Services
                             FirstName = payload.GivenName,
                             LastName = payload.FamilyName,
                             Image = payload.Picture,
-                            //PhoneNumber = payload.Prn
                         };
                         var resultCreate = await _userRepository.CreateUserAsync(user);
                         if (!resultCreate.Succeeded)
@@ -266,7 +266,7 @@ namespace Infrastructure.MyShop.Services
 
         public async Task<ServiceResponse> GetAllUsersAsync()
         {
-            var users = _userRepository.GetAllUsersAsync().Result.Select(user => new UserItemDTO
+            var users = await _userRepository.Users.Select(user => new UserItemDTO
             {
                 Id = user.Id,
                 Firstname = user.FirstName,
@@ -274,8 +274,8 @@ namespace Infrastructure.MyShop.Services
                 Email = user.Email,
                 phoneNumber = user.PhoneNumber,
                 Image = user.Image,
-                Permissions = _userRepository.GetRolesAsync(user).Result.Select(perm => new PermissionItemDTO { RoleName = perm }).ToList(),
-            }).ToList();
+                Permissions = user.Permissions.Select(perm => new PermissionItemDTO { RoleName = perm.Role.Name }).ToList()
+            }).ToListAsync();
             return new ServiceResponse
             {
                 Message = "All users successfully loaded.",
@@ -285,7 +285,7 @@ namespace Infrastructure.MyShop.Services
         }
         public async Task<ServiceResponse> GetUserByIdAsync(long id)
         {
-            var users = _userRepository.GetAllUsersAsync().Result.Where(user => user.Id == id)
+            var users = await _userRepository.Users.Where(user => user.Id == id)
             .Select(user => new UserItemDTO
             {
                 Id = user.Id,
@@ -294,14 +294,14 @@ namespace Infrastructure.MyShop.Services
                 Email = user.Email,
                 phoneNumber = user.PhoneNumber,
                 Image = user.Image,
-                Permissions = _userRepository.GetRolesAsync(user).Result.Select(perm => new PermissionItemDTO { RoleName = perm }).ToList(),
-            }).ToList().First();
+                Permissions = user.Permissions.Select(perm => new PermissionItemDTO { RoleName = perm.Role.Name }).ToList()
+            }).ToListAsync();
 
             if (users != null)
             {
                 return new ServiceResponse()
                 {
-                    Payload = users,
+                    Payload = users[0],
                     Message = "User found",
                     IsSuccess = true,
                 };

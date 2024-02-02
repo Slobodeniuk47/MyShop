@@ -17,7 +17,5 @@ export interface IEditUser {
     lastname: string,
     image: File | string,
     phoneNumber: string,
-    password: string,
-    confirmPassword: string,
     role: string,
 }

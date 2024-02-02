@@ -12,6 +12,7 @@ namespace Infrastructure.MyShop.Models.DTO.CategoryDTO
         public string DateUpdated { get; set; }
         public int? ParentId { get; set; }
         public string ParentName { get; set; }
+        public int countSubategories { get; set; }
         public int countProducts { get; set; }
         public List<CategoryItemDTO> Subcategories { get; set; }
         public List<ProductItemDTO> Products { get; set; }

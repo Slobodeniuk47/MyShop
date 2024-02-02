@@ -251,7 +251,7 @@ const onAddImageClick = async () => {
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Category</label>
                         <select className="form-select" aria-label="Default select example" id="categoryId" name="categoryId" value={values.categoryId} onChange={handleChange}>
-                            <option selected>None</option>
+                            {/* <option selected>None</option> */}
                             {list.map(item => {
                                 return (
                                     <option value={item.id}>{item.id} - {item.name}</option>

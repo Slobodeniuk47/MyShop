@@ -9,13 +9,15 @@ import { useTypedDispatch } from "../../../store/hooks/useTypedDispatch";
   const { isAuth, user } = useTypedSelector((store: any) => store.auth);
   //const { isAuth, user } = useTypedSelector((store) => store.auth);
   const dispatch = useTypedDispatch();
-  const navigator = useNavigate();
-  const logoutUser = () => {
-        delete http.defaults.headers.common["Authorization"];
-        localStorage.removeItem("token");
-        // dispatch({ type: AuthUserActionType.LOGOUT_USER });
-        // navigator("/login");
-  }
+
+    const navigator = useNavigate();
+    React.useEffect(() => {
+        if (user?.roles != "Admin") {
+            navigator("/");
+        }
+        
+    }, []);
+    
   const bg = () => {
         return `https://localhost:7230/Images/userImages/${ user?.image}`;
     }

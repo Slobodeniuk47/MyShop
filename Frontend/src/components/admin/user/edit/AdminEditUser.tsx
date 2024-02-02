@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { formHttp, http } from "../../../../http";
 import { useState, ChangeEvent, useEffect } from "react";
 import { APP_ENV } from "../../../../env";
-import { IEditUser, IPermissions } from "../types";
+import { IEditUser, IPermissions, IUserItem } from "../types";
 import { IRoleItem } from "../../role/types";
 
 const AdminEditUser = () => {
@@ -30,19 +30,18 @@ const AdminEditUser = () => {
     firstname: "",
     lastname: "",
     phoneNumber: "",
-    password: "",
-    confirmPassword: "",
     role: "",
   };
   const createSchema = yup.object({
-    // email: yup
-    //   .string()
-    //   .required("Enter name")
-    //   .email("Wrong email"),
-    // image: yup.mixed().required("Choose image"),
-    // firstName: yup.string().required("Enter Firstname").min(2),
-    // lastName: yup.string().required("Enter Lastname").min(2),
-    // phoneNumber: yup.string().required("Enter Lastname").min(10),
+    email: yup
+      .string()
+      .required("Enter name")
+      .email("Wrong email"),
+    image: yup.mixed().required("Choose image"),
+    firstname: yup.string().required("Enter the Firstname").min(2),
+    lastname: yup.string().required("Enter the Lastname").min(2),
+    phoneNumber: yup.string().required("Enter the Lastname").min(10),
+    role: yup.string().required("Choose role").min(2),
   });
 
   const loadingUserOnFormik = () => {
@@ -55,7 +54,8 @@ const AdminEditUser = () => {
           setLoading(false);
           setImage(APP_ENV.BASE_URL + "Images/userImages/" + payload.image)
           formik.setValues(payload);
-          formik.setFieldValue("role", payload.permissions[0].roleName); //Init role on the formik
+          formik.setFieldValue("role", payload.permissions[0] != null ? payload.permissions[0].roleName : "User");
+           //Init role on the formik
           console.log("payload ", payload);
         }
       })
@@ -66,7 +66,6 @@ const AdminEditUser = () => {
     http.get("api/Role/get")
       .then(resp => {
         const {payload} = resp.data;
-
         setRoles(payload);
         console.log(payload);
         
@@ -219,7 +218,7 @@ const changeImage = (event: ChangeEvent<HTMLInputElement>) => {
             <div className="mb-3">
               <label htmlFor="role" className="form-label">Role</label>
               <select className="form-select" aria-label="Default select example" id="role" name="role" value={values.role} onChange={handleChange} >
-                <option value="None">None</option>
+                {/* <option value="None">None</option> */}
                 {roles.map(item => {
                   return (
                     <option value={item.roleName} >{item.roleName}</option>

@@ -93,7 +93,7 @@ const AdminViewRoles = () => {
                                                 {item.roleName}
                                             </td>
                                             <td>
-                                                {user?.roles == "Admin" ? <a onClick={() => deleteUser(item.id)} ><i className='fa fa-trash btnDelete'></i></a> : null}
+                                                <a onClick={() => deleteUser(item.id)} ><i className='fa fa-trash btnDelete'></i></a>
                                                 
                                                 <Link to={"/admin/roles/edit?id=" + item.id}><i className='fa fa-edit btnEdit'></i></Link>
                                             </td>

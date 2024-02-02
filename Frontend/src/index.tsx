@@ -22,8 +22,8 @@ import AdminCreateProduct from './components/admin/product/create/AdminCreatePro
 import AdminEditProduct from './components/admin/product/edit/AdminEditProduct';
 import HomePage from './components/home';
 import AdminHomePage from './components/admin/adminHome';
-import ProfilePage  from "./components/profile/index";
-import ProductProfile from './components/home/ProductProfile/ProductProfile'
+import ProfilePage  from "./components/userProfile/index";
+import ProductProfile from './components/home/productProfile/ProductProfile'
 import AdminUsersView from './components/admin/user/list/AdminUsersView';
 import AdminEditUser from './components/admin/user/edit/AdminEditUser';
 import AdminViewRoles from './components/admin/role/AdminViewRoles';

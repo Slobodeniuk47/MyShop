@@ -7,7 +7,7 @@ class StarComponent extends React.Component {
         super(props);
         this.state = {
             count: props.Count,
-            rating: props.Rating
+            rating: props.Rating,
         };
         // this.Event = props.Event;
     }
@@ -22,13 +22,11 @@ class StarComponent extends React.Component {
     getStar = () => {
         var children = [];
         for (var i = 0; i < this.state.count; i++) {
-            let c = i+1;
-            let a = React.createElement('span', {
+            let a = React.createElement('span',{
                 className: i >= this.state.rating ? 'fa fa-star-o' : 'fa fa-star',
-                // onClick: () => this.event(c),
                 key: v4(),
             }, null);
-            children.push(React.createElement('a', { href: '', key: v4()}, a));
+            children.push(React.createElement('a', { color: 'black', key: v4()}, a));
         }
         return children;
     }

@@ -35,6 +35,12 @@ namespace Web.MyShop.Controllers
             var result = await _categoryService.GetAllAsync();
             return Ok(result);
         }
+        [HttpGet("getMainCategories")]
+        public async Task<ActionResult<IEnumerable<CategoryItemDTO>>> GetMainCategoriesAsync()
+        {
+            var result = await _categoryService.GetMainCategoriesAsync();
+            return Ok(result);
+        }
         [HttpGet("get/{id}")]
         public async Task<ActionResult<IEnumerable<CategoryItemDTO>>> GetById(int id)
         {

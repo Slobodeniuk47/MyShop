@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import AdminNavbar from './adminNavbar';
 import Navbar from '../../home/Navbar';
+import { useTypedSelector } from '../../../store/hooks/useTypedSelector';
 
 export default function AdminHomePage() {
-  const [isLoading, setLoading] = useState<boolean>(false);
-
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const { isAuth, user } = useTypedSelector((store) => store.auth);
   return (
       <div className="pageContent mt-5">
             {/* <Navbar/> */}

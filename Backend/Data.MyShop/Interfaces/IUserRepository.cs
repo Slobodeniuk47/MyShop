@@ -10,6 +10,8 @@ namespace Data.MyShop.Interfaces
 {
     public interface IUserRepository
     {
+        IQueryable<UserEntity> GetAll();
+        IQueryable<UserEntity> Users { get; }
         Task<IdentityResult> ChangePasswordAsync(UserEntity user, string currentPass, string newPass);
         Task<IdentityResult> CreateUserAsync(UserEntity user, string password);
         Task<IdentityResult> CreateUserAsync(UserEntity user);

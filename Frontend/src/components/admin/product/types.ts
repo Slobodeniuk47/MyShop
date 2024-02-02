@@ -1,4 +1,4 @@
-import { ICommentItem } from "../../home/ProductProfile/types";
+import { ICommentItem } from "../../home/productProfile/types";
 export interface IProductImageItem {
     id: number,
     name: string

@@ -14,11 +14,18 @@ namespace Data.MyShop.Repositories
     {
 
         private readonly UserManager<UserEntity> _userManager;
+        private protected readonly ApplicationDbContext _dbContext;
 
-        public UserRepository(UserManager<UserEntity> userManager)
+        public UserRepository(ApplicationDbContext dbContext, UserManager<UserEntity> userManager)
         {
+            _dbContext = dbContext;
             _userManager = userManager;
         }
+        public IQueryable<UserEntity> GetAll()
+        {
+            return _dbContext.Set<UserEntity>().AsNoTracking();
+        }
+        public IQueryable<UserEntity> Users => GetAll();
         public async Task<IdentityResult> ChangePasswordAsync(UserEntity user, string currentPass, string newPass)
         {
             var result = await _userManager.ChangePasswordAsync(user, currentPass, newPass);

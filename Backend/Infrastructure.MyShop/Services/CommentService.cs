@@ -93,7 +93,7 @@ namespace Infrastructure.MyShop.Services
 
             return new ServiceResponse
             {
-                Message = "The product has been created",
+                Message = "The comment has been created",
                 IsSuccess = true,
             };
         }
@@ -151,7 +151,7 @@ namespace Infrastructure.MyShop.Services
             {
                 return new ServiceResponse()
                 {
-                    Message = "Uploaded category is not correct, uploaded is closed",
+                    Message = "Uploaded comment is not correct, uploaded is closed",
                     IsSuccess = false,
                 };
             }

@@ -253,7 +253,7 @@ const AdminCreateUser = () => {
             <div className="mb-3">
               <label htmlFor="role" className="form-label">Role</label>
               <select className="form-select" aria-label="Default select example" id="role" name="role" value="---{values.role}---" onChange={handleChange} >
-                <option value="None">None</option>
+                {/* <option value="None">None</option> */}
                 {roles.map(item => {
                   return (
                     <option value={item.roleName} >{item.roleName}</option>
