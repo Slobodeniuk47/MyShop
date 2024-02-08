@@ -3,7 +3,7 @@ package org.example.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data //lombok
+@Data //lombok {get; set;}
 @Entity
 @Table(name = "tbl_Categories")
 public class CategoryEntity {
