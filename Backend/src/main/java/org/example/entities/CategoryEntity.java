@@ -2,24 +2,30 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.lang.Nullable;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data //lombok {get; set;}
-@Entity
+
 @Table(name = "tbl_Categories")
-public class CategoryEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
+@Entity
+public class CategoryEntity extends BaseEntity
+{
     private String description;
-    //public boolean IsDelete;
-
-    private java.time.LocalDate DateCreated = java.time.LocalDate.now();
-    private java.time.LocalDate DateUpdated = java.time.LocalDate.now();
-
-    private String Image;
-    //@ManyToOne
-    //@JoinColumn(name="parentId", nullable = true)
-    //public CategoryEntity Parent;
-
+    private String image;
+    //private int parentId;
+    @ManyToOne
+    @JoinColumn(name="parent_Id", nullable = true)
+    private CategoryEntity parent;
+//    @OneToMany(mappedBy = "category")
+//    private List<CategoryEntity> questionItems;
+//    public CategoryEntity() {
+//        questionItems = new ArrayList<>();
+//    }
+    //@OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
+    //private List<CategoryEntity> subcategories;
 }

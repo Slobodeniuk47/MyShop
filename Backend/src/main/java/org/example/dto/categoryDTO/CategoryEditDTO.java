@@ -1,15 +1,10 @@
 package org.example.dto.categoryDTO;
 
-import jakarta.validation.constraints.Null;
 import lombok.Data;
-import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.OptionalInt;
-
-@Data //lombok {get; set;}
-public class CategoryCreateDTO {
+@Data
+public class CategoryEditDTO {
+    private int id;
     private String name;
     private MultipartFile image;
     private String description;

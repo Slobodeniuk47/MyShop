@@ -1,18 +1,26 @@
 package org.example.dto.categoryDTO;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
-public class CategoryItemDTO {
-    public int Id;
-    public String Name;
-    public String Image;
-    public String Description;
-    public String DateCreated;
-    public String DateUpdated;
-    public int ParentId;
-    public String ParentName;
-    public int countSubategories;
-    public int countProducts;
-    public List<CategoryItemDTO> Subcategories;
+import java.io.Serializable;
+import java.util.List;
+@Data
+public class CategoryItemDTO implements Serializable {
+    private int id;
+    private String name;
+    private String image;
+    private String description;
+    private String dateCreated;
+    private String dateUpdated;
+    private Integer parentId;
+    private String parentName;
+    private Integer countSubategories;
+    private Integer countProducts;
+
+    //@JsonIgnore
+    //public List<CategoryItemDTO> Subcategories;
+
+    //@JsonIgnore
     //public List<ProductItemDTO> Products;
 }

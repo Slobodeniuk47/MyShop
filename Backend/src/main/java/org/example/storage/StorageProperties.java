@@ -11,5 +11,5 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 @ConfigurationProperties("storage")
 @Data
 public class StorageProperties {
-    private String location = "upload";
+    private String location = "Images";
 }
