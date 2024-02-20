@@ -1,0 +1,29 @@
+package org.example.DAL.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="tbl_roles")
+public class RoleEntity extends BaseEntity {
+//    @ManyToMany(mappedBy = "roles")
+//    private List<UserEntity> users;
+//    public RoleEntity() {
+//        users = new ArrayList<UserEntity>();
+//    }
+    @OneToMany(mappedBy = "role")
+    private List<UserRoleEntity> userRoles = new ArrayList<>();
+}
