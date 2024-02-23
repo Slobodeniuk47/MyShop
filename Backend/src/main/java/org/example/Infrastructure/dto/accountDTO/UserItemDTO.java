@@ -15,9 +15,13 @@ import java.util.List;
 public class UserItemDTO {
     private Integer id;
     private String name;
+    private String image;
+    private String imageURL;
+    private String firstname;
+    private String lastname;
     private boolean IsDelete;
-    private LocalDateTime dateCreated;
-    private LocalDateTime dateUpdated;
+    private String dateCreated;
+    private String dateUpdated;
     private String email;
     private String phoneNumber;
     private String passwordHash;

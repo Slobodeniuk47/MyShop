@@ -5,7 +5,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
-import org.example.DAL.entities.UserEntity;
+import org.example.DAL.entities.account.UserEntity;
 import org.example.DAL.repositories.UserRoleRepository;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;

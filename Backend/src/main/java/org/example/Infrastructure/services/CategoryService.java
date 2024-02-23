@@ -55,12 +55,6 @@ public class CategoryService implements ICategoryService {
         if(catOptional.isPresent())
         {
             var result = _categoryMapper.CategoryItemDTOByCategoryEntity(catOptional.get());
-
-            if(!Objects.isNull(catOptional.get().getParent())) {
-                var parent = _categoryRepository.findById(catOptional.get().getParent().getId());
-                //result.setParentId(parent.get().getId());
-                //result.setParentName(parent.get().getName());
-            }
             return result;
         }
         return null;
@@ -68,39 +62,25 @@ public class CategoryService implements ICategoryService {
     @Override
     public CategoryItemDTO create(CategoryCreateDTO model) {
         CategoryEntity category = _categoryMapper.CategoryEntityByCategoryCreateDTO(model);
-
-//        String fileName = _storageService.saveByFormat(model.getImage(), FileSaveFormat.WEBP);
-
-//        Integer parentId = model.getParentId();
-//        if(parentId != null) {
-//            category.setParent(_categoryRepository.getById(parentId));
-//        }
-//        else {
-//            category.setParent(null);
-//        }
         _categoryRepository.save(category);
 
         var result = _categoryMapper.CategoryItemDTOByCategoryEntity(category);
-        //result.setParentId(model.getParentId());
-
         return result;
     }
     @Override
     public CategoryItemDTO edit(CategoryEditDTO model) {
         var catOptional = _categoryRepository.findById(model.getId());
 
-        String fileName = null;
-        if (!Objects.isNull(model.getImageUpload())) {
-            fileName = model.getImageUpload().toString();
-            _storageService.removeFile(catOptional.get().getImage());
-            fileName = _storageService.saveByFormat(model.getImageUpload(), FileSaveFormat.PNG);
-        }
+
         if(catOptional.isPresent())
         {
             var cat = catOptional.get();
             cat.setName(model.getName());
             cat.setDescription(model.getDescription());
             if (!Objects.isNull(model.getImageUpload())) {
+                String fileName = model.getImageUpload().toString();
+                _storageService.removeFile(catOptional.get().getImage());
+                fileName = _storageService.saveByFormat(model.getImageUpload(), FileSaveFormat.PNG);
                 cat.setImage(fileName);
             }
             cat.setDateUpdated(LocalDateTime.now());

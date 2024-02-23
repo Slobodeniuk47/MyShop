@@ -1,7 +1,7 @@
 package org.example.API.configuration.security;
 
 import lombok.RequiredArgsConstructor;
-import org.example.DAL.entities.UserEntity;
+import org.example.DAL.entities.account.UserEntity;
 import org.example.DAL.repositories.UserRepository;
 import org.example.DAL.repositories.UserRoleRepository;
 import org.springframework.context.annotation.Bean;

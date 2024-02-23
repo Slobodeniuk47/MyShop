@@ -1,10 +1,11 @@
-package org.example.DAL.entities;
+package org.example.DAL.entities.account;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.DAL.entities.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name="tbl_users")
-public class UserEntity extends BaseEntity{
+public class UserEntity extends BaseEntity {
     private String email;
     private String image;
     private String imageURL;

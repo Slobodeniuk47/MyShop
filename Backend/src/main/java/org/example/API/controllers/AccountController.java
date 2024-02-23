@@ -38,7 +38,7 @@ public class AccountController {
     }
 
     @GetMapping("get/{id}")
-    public ResponseService getById(int id)
+    public ResponseService getById(@PathVariable("id")int id)
     {
         var result = _accountService.getById(id);
         return new ResponseService(result, HttpStatus.FOUND);

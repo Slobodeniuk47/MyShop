@@ -6,8 +6,8 @@ import org.example.Infrastructure.dto.accountDTO.LoginDTO;
 import org.example.Infrastructure.dto.accountDTO.UserCreateDTO;
 import org.example.Infrastructure.dto.accountDTO.UserEditDTO;
 import org.example.Infrastructure.dto.accountDTO.UserItemDTO;
-import org.example.DAL.entities.UserEntity;
-import org.example.DAL.entities.UserRoleEntity;
+import org.example.DAL.entities.account.UserEntity;
+import org.example.DAL.entities.account.UserRoleEntity;
 import org.example.Infrastructure.interfaces.IAccountService;
 import org.example.Infrastructure.mappers.IUserMapper;
 import org.example.DAL.repositories.RoleRepository;
@@ -20,12 +20,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.ObjectInput;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,11 +60,11 @@ public class AccountService implements IAccountService {
     }
     @Override
     public UserItemDTO getById(int id) {
-        var catOptional = _userRepository.findById(id);
+        var userOptional = _userRepository.findById(id);
 
-        if(catOptional.isPresent())
+        if(userOptional.isPresent())
         {
-            var result = _userMapper.UserItemDTOByUserEntity(catOptional.get());
+            var result = _userMapper.UserItemDTOByUserEntity(userOptional.get());
             return result;
         }
         return null;
@@ -106,7 +104,6 @@ public class AccountService implements IAccountService {
 
         if(userByEmail.isPresent() && userByEmail.get().getId() != model.getId())
             return new ResponseService("Email already exists!", HttpStatus.NOT_ACCEPTABLE);
-            //throw new UsernameNotFoundException("Email already exists!");
         UserEntity newUser = user;
 
         if (!Objects.isNull(model.getImageUpload())) {

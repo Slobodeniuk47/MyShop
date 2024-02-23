@@ -1,7 +1,7 @@
 package org.example.Infrastructure.services;
 
 import lombok.RequiredArgsConstructor;
-import org.example.DAL.entities.RoleEntity;
+import org.example.DAL.entities.account.RoleEntity;
 import org.example.DAL.repositories.RoleRepository;
 import org.example.Infrastructure.dto.roleDTO.RoleCreateDTO;
 import org.example.Infrastructure.dto.roleDTO.RoleEditDTO;

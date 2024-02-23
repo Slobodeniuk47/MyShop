@@ -1,8 +1,8 @@
 package org.example.DAL.repositories;
 
-import org.example.DAL.entities.UserEntity;
-import org.example.DAL.entities.UserRoleEntity;
-import org.example.DAL.entities.UserRolePK;
+import org.example.DAL.entities.account.UserEntity;
+import org.example.DAL.entities.account.UserRoleEntity;
+import org.example.DAL.entities.account.UserRolePK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

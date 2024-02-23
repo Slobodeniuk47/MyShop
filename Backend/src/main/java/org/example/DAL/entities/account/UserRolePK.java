@@ -1,6 +1,8 @@
-package org.example.DAL.entities;
+package org.example.DAL.entities.account;
 
 import lombok.Data;
+import org.example.DAL.entities.account.RoleEntity;
+import org.example.DAL.entities.account.UserEntity;
 
 import java.io.Serializable;
 

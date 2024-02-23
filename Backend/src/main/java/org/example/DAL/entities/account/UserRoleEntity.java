@@ -1,4 +1,4 @@
-package org.example.DAL.entities;
+package org.example.DAL.entities.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
