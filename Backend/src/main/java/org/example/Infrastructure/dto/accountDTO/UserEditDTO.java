@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserEditDTO {
-    int id;
+    private int id;
     private String email;
     private String firstname;
     private String lastname;

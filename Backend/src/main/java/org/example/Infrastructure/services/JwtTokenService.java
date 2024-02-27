@@ -6,7 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.example.DAL.entities.account.UserEntity;
-import org.example.DAL.repositories.UserRoleRepository;
+import org.example.DAL.repositories.IUserRoleRepository;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 import java.security.Key;
@@ -18,7 +18,7 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class JwtTokenService {
 //Working with  jjwt.*  0.11.5 verison
-    private final UserRoleRepository _userRoleRepository;
+    private final IUserRoleRepository _userRoleRepository;
     private final String jwtSecret = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";  //the key we use to encrypt (any letters or numbers)
     private final String jwtIssuer = "step.io";   //indicates who owns this token. You can enter your domain name
 

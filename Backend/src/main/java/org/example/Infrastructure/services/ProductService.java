@@ -3,17 +3,18 @@ package org.example.Infrastructure.services;
 import lombok.AllArgsConstructor;
 import org.example.DAL.entities.ProductEntity;
 import org.example.DAL.entities.ProductImageEntity;
-import org.example.DAL.repositories.CategoryRepository;
-import org.example.DAL.repositories.ProductImageRepository;
-import org.example.DAL.repositories.ProductRepository;
+import org.example.DAL.repositories.ICategoryRepository;
+import org.example.DAL.repositories.IProductImageRepository;
+import org.example.DAL.repositories.IProductRepository;
 import org.example.Infrastructure.dto.productDTO.ProductCreateDTO;
 import org.example.Infrastructure.dto.productDTO.ProductEditDTO;
 import org.example.Infrastructure.dto.productDTO.ProductItemDTO;
 import org.example.Infrastructure.interfaces.IProductService;
 import org.example.Infrastructure.mappers.IProductMapper;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,10 +22,10 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ProductService implements IProductService {
-    private final CategoryRepository _categoryRepository;
-    private final ProductRepository _productRepository;
-    private final ProductImageRepository _productImageRepository;
-    private final StorageService _storageService;
+    private final ICategoryRepository _categoryRepository;
+    private final IProductRepository _productRepository;
+    private final IProductImageRepository _productImageRepository;
+    private final IStorageService _storageService;
     private final IProductMapper _productMapper;
     @Override
     public ProductItemDTO create(ProductCreateDTO model) {
@@ -56,9 +57,9 @@ public class ProductService implements IProductService {
     @Override
     public ProductItemDTO getById(int id) {
         var productOptional = _productRepository.findById(id);
-        var result = _productMapper.ProductItemDTOByProductEntity(productOptional.get());
         if(productOptional.isPresent())
         {
+            var result = _productMapper.ProductItemDTOByProductEntity(productOptional.get());
             return result;
         }
         return null;
@@ -82,6 +83,7 @@ public class ProductService implements IProductService {
             p.setPrice(model.getPrice());
             p.setDescription(model.getDescription());
             p.setCategory(_categoryRepository.getById(model.getCategoryId()));
+            p.setDateUpdated(LocalDateTime.now());
             _productRepository.save(p);
 
             if(!Objects.isNull(model.getImagesUpload())) {

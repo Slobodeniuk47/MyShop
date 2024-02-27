@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 
-public interface StorageService {
+public interface IStorageService {
     void init();
     Resource loadAsResource(String filename);
     String save(String base64);

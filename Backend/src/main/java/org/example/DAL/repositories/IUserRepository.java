@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer>
+public interface IUserRepository extends JpaRepository<UserEntity, Integer>
         //,JpaSpecificationExecutor<UserEntity> //commented
 {
     //UserEntity findByEmail(String email); //commented

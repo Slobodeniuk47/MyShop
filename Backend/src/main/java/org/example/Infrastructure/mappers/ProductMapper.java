@@ -4,23 +4,21 @@ import lombok.AllArgsConstructor;
 import org.example.DAL.constants.Path;
 import org.example.DAL.entities.CategoryEntity;
 import org.example.DAL.entities.ProductEntity;
-import org.example.DAL.repositories.ProductRepository;
+import org.example.DAL.repositories.IProductRepository;
+import org.example.Infrastructure.dto.commentDTO.CommentItemDTO;
 import org.example.Infrastructure.dto.productDTO.ProductImageItemDTO;
 import org.example.Infrastructure.dto.productDTO.ProductItemDTO;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Component
 @Primary
 @AllArgsConstructor
 public class ProductMapper implements IProductMapper {
-    private final ProductRepository _productRepository;
-    private final StorageService _storageService;
     public ProductItemDTO ProductItemDTOByProductEntity(ProductEntity productEntity) {
         ProductItemDTO dto = new ProductItemDTO();
         dto.setId(productEntity.getId());
@@ -36,8 +34,7 @@ public class ProductMapper implements IProductMapper {
             dto.setCategoryName(categoryEntity.getName());
         }
         //Get images
-        var images = new ArrayList<ProductImageItemDTO>();
-        //var listImg = _productRepository.findById(productEntity.getId());
+        var imagesDto = new ArrayList<ProductImageItemDTO>();
         for(var img : productEntity.getProductImages()) {
             var item = new ProductImageItemDTO();
             item.setId(img.getId());
@@ -45,9 +42,31 @@ public class ProductMapper implements IProductMapper {
             item.setDateCreated(img.getDateCreated().toString());
             item.setDateUpdated(img.getDateUpdated().toString());
 
-            images.add(item);
+            imagesDto.add(item);
         }
-        dto.setImages(images);
+        dto.setImages(imagesDto);
+        //GetComments
+        var commentsDto = new ArrayList<CommentItemDTO>();
+        var comments = productEntity.getComments();
+        for (var comment : comments) {
+            var itemDto = new CommentItemDTO();
+            itemDto.setId(comment.getId());
+            itemDto.setDateCreated(comment.getDateCreated().toString());
+            itemDto.setDateUpdated(comment.getDateUpdated().toString());
+            itemDto.setTitle(comment.getTitle());
+            itemDto.setMessage(comment.getMessage());
+            itemDto.setLikes(comment.getLikes());
+            itemDto.setDislikes(comment.getDislikes());
+            itemDto.setStars(comment.getStars());
+            itemDto.setProductId(comment.getProduct().getId());
+            var user = comment.getUser();
+            itemDto.setUserId(user.getId());
+            itemDto.setUserName(user.getFirstname());
+            commentsDto.add(itemDto);
+        }
+        dto.setComments(commentsDto);
+        dto.setNumberOfComments(comments.size());
+
 
 
 //        public List<CommentItemDTO> Comments { get; set; }

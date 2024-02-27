@@ -3,22 +3,16 @@ package org.example.API.controllers;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.message.ThreadDumpMessage;
-import org.example.DAL.entities.ProductImageEntity;
-import org.example.DAL.repositories.ProductImageRepository;
-import org.example.DAL.repositories.ProductRepository;
+import org.example.DAL.repositories.IProductImageRepository;
+import org.example.DAL.repositories.IProductRepository;
 import org.example.Infrastructure.dto.productDTO.ProductCreateDTO;
 import org.example.Infrastructure.dto.productDTO.ProductEditDTO;
 import org.example.Infrastructure.interfaces.IProductService;
 import org.example.Infrastructure.services.ResponseService;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @SecurityRequirement(name="my-api")
@@ -27,23 +21,6 @@ import java.util.List;
 public class ProductController {
     private final IProductService _productService;
 
-    private final ProductRepository _productRepository;
-    private final ProductImageRepository _productImageRepository;
-    private final StorageService _storageService;
-
-    @DeleteMapping("testRemoveImagesByProductId")//Working!!!!
-    public void removeImageByProductId(int id) {
-        var productOptional = _productRepository.getById(id);
-        for (var img : _productImageRepository.findAll()){
-            if(img.getProduct().getId() == productOptional.getId()){
-                _productImageRepository.delete(img);
-            }
-        }
-    }
-    @DeleteMapping("testRemoveImage")
-    public void removeImage(int id) {
-        _productImageRepository.deleteById(id);
-    }
     @GetMapping("get")
     public ResponseService getAll()
     {

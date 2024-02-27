@@ -5,9 +5,9 @@ import org.example.DAL.constants.Path;
 import org.example.Infrastructure.dto.categoryDTO.CategoryCreateDTO;
 import org.example.Infrastructure.dto.categoryDTO.CategoryItemDTO;
 import org.example.DAL.entities.CategoryEntity;
-import org.example.DAL.repositories.CategoryRepository;
+import org.example.DAL.repositories.ICategoryRepository;
 import org.example.Infrastructure.storage.FileSaveFormat;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +19,8 @@ import java.util.Objects;
 @Primary
 @AllArgsConstructor
 public class CategoryMapper implements ICategoryMapper {
-    private final CategoryRepository _categoryRepository;
-    private final StorageService _storageService;
+    private final ICategoryRepository _categoryRepository;
+    private final IStorageService _storageService;
     @Override
     public CategoryItemDTO CategoryItemDTOByCategoryEntity(CategoryEntity categoryEntity) {
         CategoryItemDTO dto = new CategoryItemDTO();

@@ -2,8 +2,8 @@ package org.example.API.configuration.security;
 
 import lombok.RequiredArgsConstructor;
 import org.example.DAL.entities.account.UserEntity;
-import org.example.DAL.repositories.UserRepository;
-import org.example.DAL.repositories.UserRoleRepository;
+import org.example.DAL.repositories.IUserRepository;
+import org.example.DAL.repositories.IUserRoleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,8 +25,8 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final UserRepository _userRepository;
-    private final UserRoleRepository userRoleRepository;
+    private final IUserRepository _userRepository;
+    private final IUserRoleRepository userRoleRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {

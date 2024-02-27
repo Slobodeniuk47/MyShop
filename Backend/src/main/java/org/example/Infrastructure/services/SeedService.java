@@ -6,21 +6,21 @@ import org.example.DAL.entities.CategoryEntity;
 import org.example.DAL.entities.account.RoleEntity;
 import org.example.DAL.entities.account.UserEntity;
 import org.example.DAL.entities.account.UserRoleEntity;
-import org.example.DAL.repositories.CategoryRepository;
-import org.example.DAL.repositories.RoleRepository;
-import org.example.DAL.repositories.UserRepository;
-import org.example.DAL.repositories.UserRoleRepository;
+import org.example.DAL.repositories.ICategoryRepository;
+import org.example.DAL.repositories.IRoleRepository;
+import org.example.DAL.repositories.IUserRepository;
+import org.example.DAL.repositories.IUserRoleRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class SeedService {
-    private final CategoryRepository _categoryRepository;
-    private final RoleRepository _roleRepository;
-    private final UserRepository _userRepository;
+    private final ICategoryRepository _categoryRepository;
+    private final IRoleRepository _roleRepository;
+    private final IUserRepository _userRepository;
     private final PasswordEncoder _passwordEncoder;
-    private final UserRoleRepository _userRoleRepository;
+    private final IUserRoleRepository _userRoleRepository;
     public void seedRolesData() {
         if(_roleRepository.count() == 0)
         {

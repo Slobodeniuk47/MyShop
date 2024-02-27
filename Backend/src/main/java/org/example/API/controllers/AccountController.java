@@ -3,15 +3,21 @@ package org.example.API.controllers;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.DAL.repositories.IUserRepository;
+import org.example.Infrastructure.dto.accountDTO.ExternalLoginDTO;
 import org.example.Infrastructure.dto.accountDTO.LoginDTO;
 import org.example.Infrastructure.dto.accountDTO.UserCreateDTO;
 import org.example.Infrastructure.dto.accountDTO.UserEditDTO;
 import org.example.Infrastructure.dto.categoryDTO.CategoryEditDTO;
+import org.example.Infrastructure.google.GoogleAuthService;
 import org.example.Infrastructure.interfaces.IAccountService;
+import org.example.Infrastructure.services.JwtTokenService;
 import org.example.Infrastructure.services.ResponseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 @SecurityRequirement(name="my-api")
@@ -19,6 +25,20 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AccountController {
     private final IAccountService _accountService;
+
+    private final JwtTokenService _jwtTokenService;
+    private final IUserRepository _userRepository;
+    private final GoogleAuthService _googleAuthService;
+    @PostMapping( path="GoogleExternalLogin", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseService googleExternalLogin(@Valid @ModelAttribute ExternalLoginDTO model) {
+        try {
+            var jwtToken = _accountService.googleExternalLogin(model);
+            return new ResponseService(jwtToken, HttpStatus.ACCEPTED);
+        }
+        catch(Exception ex) {
+            return new ResponseService(HttpStatus.UNAUTHORIZED);
+        }
+    }
     @PostMapping( path="login", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseService login(@Valid @ModelAttribute LoginDTO model) {
         try {

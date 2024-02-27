@@ -1,6 +1,7 @@
 package org.example.Infrastructure.dto.productDTO;
 
 import lombok.Data;
+import org.example.Infrastructure.dto.commentDTO.CommentItemDTO;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class ProductItemDTO {
     private List<ProductImageItemDTO> images;
     private int categoryId;
     private String categoryName;
-    //comments
-    //numberOfComments
-    //stars (by comment)
+    private List<CommentItemDTO> comments;
+    private int numberOfComments;
+    private int stars;
 }

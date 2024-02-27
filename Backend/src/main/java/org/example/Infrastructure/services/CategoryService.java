@@ -7,9 +7,9 @@ import org.example.Infrastructure.dto.categoryDTO.CategoryEditDTO;
 import org.example.Infrastructure.dto.categoryDTO.CategoryItemDTO;
 import org.example.DAL.entities.CategoryEntity;
 import org.example.Infrastructure.mappers.ICategoryMapper;
-import org.example.DAL.repositories.CategoryRepository;
+import org.example.DAL.repositories.ICategoryRepository;
 import org.example.Infrastructure.storage.FileSaveFormat;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class CategoryService implements ICategoryService {
-    private final CategoryRepository _categoryRepository;
+    private final ICategoryRepository _categoryRepository;
     private final ICategoryMapper _categoryMapper;
-    private final StorageService _storageService;
+    private final IStorageService _storageService;
 
     @Override
     public List<CategoryItemDTO> getAll() {

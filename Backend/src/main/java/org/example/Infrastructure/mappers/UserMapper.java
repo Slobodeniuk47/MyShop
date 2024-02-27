@@ -1,12 +1,10 @@
 package org.example.Infrastructure.mappers;
 
 import lombok.AllArgsConstructor;
-import org.example.DAL.constants.Path;
 import org.example.DAL.entities.account.UserEntity;
-import org.example.DAL.repositories.UserRoleRepository;
+import org.example.DAL.repositories.IUserRoleRepository;
 import org.example.Infrastructure.dto.accountDTO.PermissionItemDTO;
 import org.example.Infrastructure.dto.accountDTO.UserItemDTO;
-import org.example.Infrastructure.dto.productDTO.ProductImageItemDTO;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 @Primary
 @AllArgsConstructor
 public class UserMapper implements IUserMapper {
-    private final UserRoleRepository _userRoleRepository;
+    private final IUserRoleRepository _userRoleRepository;
     @Override
     public UserItemDTO UserItemDTOByUserEntity(UserEntity userEntity) {
         UserItemDTO dto = new UserItemDTO();

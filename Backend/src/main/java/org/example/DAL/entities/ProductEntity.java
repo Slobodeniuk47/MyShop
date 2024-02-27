@@ -24,4 +24,6 @@ public class ProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImageEntity> productImages;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<CommentEntity> comments;
 }

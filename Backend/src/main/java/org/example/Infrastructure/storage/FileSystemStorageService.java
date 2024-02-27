@@ -17,7 +17,7 @@ import java.util.Base64;
 import java.util.UUID;
 
 @Service
-public class FileSystemStorageService implements StorageService {
+public class FileSystemStorageService implements IStorageService {
     private final Path rootLocation;
     int [] imageSizes = {1920};//{32, 150, 300, 600, 1200};//array of photo sizes
     public FileSystemStorageService(StorageProperties properties) {

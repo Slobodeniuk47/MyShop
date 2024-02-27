@@ -1,24 +1,24 @@
 package org.example.Infrastructure.services;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.DAL.constants.Path;
-import org.example.Infrastructure.dto.accountDTO.LoginDTO;
-import org.example.Infrastructure.dto.accountDTO.UserCreateDTO;
-import org.example.Infrastructure.dto.accountDTO.UserEditDTO;
-import org.example.Infrastructure.dto.accountDTO.UserItemDTO;
+import org.example.Infrastructure.dto.accountDTO.*;
 import org.example.DAL.entities.account.UserEntity;
 import org.example.DAL.entities.account.UserRoleEntity;
+import org.example.Infrastructure.google.GoogleAuthService;
 import org.example.Infrastructure.interfaces.IAccountService;
 import org.example.Infrastructure.mappers.IUserMapper;
-import org.example.DAL.repositories.RoleRepository;
-import org.example.DAL.repositories.UserRepository;
-import org.example.DAL.repositories.UserRoleRepository;
+import org.example.DAL.repositories.IRoleRepository;
+import org.example.DAL.repositories.IUserRepository;
+import org.example.DAL.repositories.IUserRoleRepository;
 import org.example.Infrastructure.storage.FileSaveFormat;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,13 +30,48 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountService implements IAccountService {
 
-    private final UserRepository _userRepository;
-    private final UserRoleRepository _userRoleRepository;
-    private final RoleRepository _roleRepository;
+    private final IUserRepository _userRepository;
+    private final IUserRoleRepository _userRoleRepository;
+    private final IRoleRepository _roleRepository;
     private final JwtTokenService _jwtTokenService;
     private final IUserMapper _userMapper;
     private final PasswordEncoder _passwordEncoder;
-    private final StorageService _storageService;
+    private final IStorageService _storageService;
+    private final GoogleAuthService _googleAuthService;
+
+    @Override
+    public String googleExternalLogin(@Valid @ModelAttribute ExternalLoginDTO model) {
+        try {
+            var googleUserInfo = _googleAuthService.verify(model.getToken());
+            var checkUser = _userRepository.findByEmail(googleUserInfo.getEmail());
+            if(!checkUser.isPresent()) {
+                UserEntity newUser = UserEntity.builder()
+                        .image("image")
+                        .email(googleUserInfo.getEmail())
+                        .firstname("firstname")
+                        .imageURL(Path.ApiURL + "images/" + "image")
+                        .lastname("lastname")
+                        .passwordHash("password")
+                        .phoneNumber("phonenumber")
+
+                        .build();
+                _userRepository.save(newUser);
+                //Set role for user
+                var roleName = "User";
+                var permission = new UserRoleEntity().builder()
+                        .role(_roleRepository.findByName(roleName))
+                        .user(newUser)
+                        .build();
+                _userRoleRepository.save(permission);
+                return _jwtTokenService.generateAccessToken(newUser);
+            }
+            var jwtToken = _jwtTokenService.generateAccessToken(checkUser.get());
+            return jwtToken;
+        }
+        catch(Exception ex) {
+           return "(HttpStatus.UNAUTHORIZED)";
+        }
+    }
     @Override
     public String login(LoginDTO request) {
         var user = _userRepository.findByEmail(request.getEmail())
@@ -70,10 +105,10 @@ public class AccountService implements IAccountService {
         return null;
     }
     @Override
-    public ResponseService register(UserCreateDTO model) {
+    public String register(UserCreateDTO model) {
         var user = _userRepository.findByEmail(model.getEmail());
         if(user.isPresent())
-            return new ResponseService("The user is already registered!", HttpStatus.NOT_ACCEPTABLE);
+            return "The user is already registered!";
         //UserEntity newUser = _userMapper.itemDtoToUser(model);
         String fileName = _storageService.saveByFormat(model.getImage(), FileSaveFormat.PNG);
         UserEntity newUser = UserEntity.builder()
@@ -93,9 +128,9 @@ public class AccountService implements IAccountService {
                 .role(_roleRepository.findByName(roleName))
                 .user(newUser)
                 .build();
-        //newUser.setUserRoles(permission.getRole().getUserRoles());
         _userRoleRepository.save(permission);
-        return new ResponseService(newUser, HttpStatus.CREATED);
+        var jwtToken = _jwtTokenService.generateAccessToken(newUser);
+        return jwtToken;
     }
     @Override
     public ResponseService edit(UserEditDTO model) {

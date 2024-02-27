@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.example.DAL.constants.Path;
 import org.example.Infrastructure.services.SeedService;
 import org.example.Infrastructure.storage.StorageProperties;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +27,7 @@ public class Main {
     @Value("${my.custom.property.id}")
     String customPropertyId;
     @Bean
-    CommandLineRunner init(StorageService storageService, SeedService seedService) {
+    CommandLineRunner init(IStorageService storageService, SeedService seedService) {
         return(args -> {
             try {
                 System.out.println("[Path.class] "+Path.ApiURL);

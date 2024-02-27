@@ -1,8 +1,8 @@
 package org.example.API.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.example.DAL.repositories.CategoryRepository;
-import org.example.Infrastructure.storage.StorageService;
+import org.example.DAL.repositories.ICategoryRepository;
+import org.example.Infrastructure.storage.IStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,8 +15,8 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequiredArgsConstructor //auto create constructor with params
 public class HomeController {
-    private final CategoryRepository _categoryRepository;
-    private final StorageService _storageService;
+    private final ICategoryRepository _categoryRepository;
+    private final IStorageService _storageService;
     @GetMapping("/images/{filename}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable("filename") String filename) throws Exception {
