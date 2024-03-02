@@ -14,13 +14,13 @@ const RegistrationView = () => {
 
   const initValues: IRegistration = {
     email: "",
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     image: "",
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    role: null
+    role: ""
   };
   const [message, setMessage] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>();
@@ -35,8 +35,8 @@ const RegistrationView = () => {
     password: yup.string().required("Enter password"),
     confirmPassword: yup.string().required("Confirm password").oneOf([yup.ref('password'), ""], 'Passwords must match'),
     image: yup.mixed().required("Choose image"),
-    firstName: yup.string().required("Enter Firstname").min(2),
-    lastName: yup.string().required("Enter Lastname").min(2)
+    firstname: yup.string().required("Enter Firstname").min(2),
+    lastname: yup.string().required("Enter Lastname").min(2)
   });
 
   const clickSelect = () => {
@@ -58,15 +58,9 @@ const RegistrationView = () => {
   const onSubmitFormikData = async (values: IRegistration) => {
     try {
       setLoading(true);
-      const http2 = axios.create({
-            baseURL: APP_ENV.BASE_URL,
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        });
       console.log("Send", values);
 
-      http2.post("api/Account/create", values).then(() => {
+      formHttp.post("api/Account/register", values).then(() => {
             navigator("/login");
 
         });
@@ -145,39 +139,39 @@ const RegistrationView = () => {
                 )}
               </div>
               <div className="mb-2">
-                <label htmlFor="name" className="form-label">
+                <label htmlFor="firstname" className="form-label">
                   Firstname
                 </label>
                 <input
                   type="text"
                   className={classNames("form-control", {
-                    "is-invalid": errors.firstName && touched.firstName,
+                    "is-invalid": errors.firstname && touched.firstname,
                   })}
-                  id="firstName"
-                  name="firstName"
-                  value={values.firstName}
+                  id="firstname"
+                  name="firstname"
+                  value={values.firstname}
                   onChange={handleChange}
                 />
-                {errors.firstName && touched.firstName && (
-                  <div className="invalid-feedback">{errors.firstName}</div>
+                {errors.firstname && touched.firstname && (
+                  <div className="invalid-feedback">{errors.firstname}</div>
                 )}
               </div>
               <div className="mb-2">
-                <label htmlFor="lastName" className="form-label">
+                <label htmlFor="lastname" className="form-label">
                   Lastname
                 </label>
                 <input
                   type="text"
                   className={classNames("form-control", {
-                    "is-invalid": errors.lastName && touched.lastName,
+                    "is-invalid": errors.lastname && touched.lastname,
                   })}
-                  id="lastName"
-                  name="lastName"
-                  value={values.lastName}
+                  id="lastname"
+                  name="lastname"
+                  value={values.lastname}
                   onChange={handleChange}
                 />
-                {errors.lastName && touched.lastName && (
-                  <div className="invalid-feedback">{errors.lastName}</div>
+                {errors.lastname && touched.lastname && (
+                  <div className="invalid-feedback">{errors.lastname}</div>
                 )}
                 </div>
                 <div className="mb-2">

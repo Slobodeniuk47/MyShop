@@ -15,6 +15,7 @@ namespace Infrastructure.MyShop.Models.DTO.AccountDTO
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Image { get; set; }
+        public string ImageURL { get; set; }
         public string phoneNumber { get; set; }
         public List<PermissionItemDTO> Permissions { get; set; }
     }

@@ -50,6 +50,7 @@ const LoginView = () => {
     }
     setLoading(true);
     //Sends the model to the server, and the server must validate the model
+    console.log("Send data to googleExtLogin",model)
     formHttp.post("api/Account/GoogleExternalLogin", model)
       .then(x =>
       {

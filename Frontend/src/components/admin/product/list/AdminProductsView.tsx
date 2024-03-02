@@ -30,7 +30,7 @@ const AdminProductsView = () => {
     }
 
     const deleteConfirmed = () => {
-        console.log(1);
+        console.log("DeleteId", deleteId);
 
         http.delete('api/product/deleteProduct/' + deleteId)
             .then(() => {
@@ -111,7 +111,7 @@ const AdminProductsView = () => {
                                                 {item.id}
                                             </td>
                                             <td>
-                                                {item.images.length > 0 ? <img src={`${APP_ENV.BASE_URL}Images/productImages/${item.images[0].name}`} height={60}></img> : null}
+                                                {item.images.length > 0 ? <img src={`${item.images[0].name}`} height={60}></img> : null}
                                                 
                                             </td>
                                             <td>

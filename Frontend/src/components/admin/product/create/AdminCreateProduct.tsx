@@ -60,7 +60,7 @@ const AdminCreateProduct = () => {
         description: '',
         price: 0,
         //discountPrice: 0,
-        categoryId: 0,
+        categoryId: 1,
         images: []
         //priority: 0,
         //status: true
@@ -112,31 +112,6 @@ const AdminCreateProduct = () => {
         validationSchema: createSchema,
         onSubmit: onSubmitFormikData
     });
-
-    // const onChangeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     const files = e.target.files;
-    //     if (files) {
-    //         const file = files[0];
-    //         const allowTypes = ["image/jpeg", "image/png", "image/jpg"];
-    //         if (!allowTypes.includes(file.type)) {
-    //             alert("Невірний формат файлу");
-    //             return;
-    //         }
-    //         const upload: IUploadImage = {
-    //             image: file
-    //         }
-    //         formHttp.post('api/product/uploadProductImage', upload, {
-    //         })
-    //             .then(resp => {
-    //                 setImages([...images, resp.data]);
-    //             })
-    //             .catch(bad => {
-    //                 console.log("Bad request", bad);
-    //             })
-
-    //     }
-
-    // }
     const { values, errors, touched, handleSubmit, handleChange, setFieldValue } = formik;
 const onAddImageClick = async () => {
     await fileSelectInputRef.current?.click();

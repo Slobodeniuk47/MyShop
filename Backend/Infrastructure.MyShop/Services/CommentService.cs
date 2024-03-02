@@ -51,8 +51,9 @@ namespace Infrastructure.MyShop.Services
                 UserId = x.UserId,
                 UserName = x.User.FirstName,
                 ProductId = x.ProductId,
-                Images = x.CommentImages.Select(x => new CommentImageItemDTO { Id = x.Id, Name = x.Name, CommentId = x.CommentId, CommentName = x.Comment.Title }).ToList(),
-                User = new UserItemDTO { Id = x.UserId, Firstname = x.User.FirstName, Lastname = x.User.LastName, Email = x.User.Email, phoneNumber = x.User.PhoneNumber, Image = x.User.Image }
+                Images = x.CommentImages.Select(x => new CommentImageItemDTO { Id = x.Id, Name = $"{DirectoriesInProject.Api}/{DirectoriesInProject.CommentImages}/{x.Name}", CommentId = x.CommentId, CommentName = x.Comment.Title }).ToList(),
+                User = new UserItemDTO { Id = x.UserId, Firstname = x.User.FirstName, Lastname = x.User.LastName, Email = x.User.Email, phoneNumber = x.User.PhoneNumber, ImageURL = x.User.IsGoogle == false ? $"{DirectoriesInProject.Api}/{DirectoriesInProject.UserImages}/{x.User.Image}" : x.User.Image
+        }
             }).ToListAsync();
 
             return new ServiceResponse

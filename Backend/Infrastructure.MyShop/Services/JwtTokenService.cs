@@ -35,7 +35,7 @@ namespace Infrastructure.MyShop.Services
             }
             if(user.Image != null)
             {
-                image = user.Image;
+                image = user.IsGoogle == false ? $"{DirectoriesInProject.Api}/{DirectoriesInProject.UserImages}/{user.Image}" : user.Image;
             }
             var claims = new List<Claim>()
             {

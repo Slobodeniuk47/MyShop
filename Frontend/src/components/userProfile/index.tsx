@@ -16,10 +16,6 @@ const ProfilePage: React.FC = () => {
     const { isAuth, user } = useTypedSelector(store => store.auth);
     const auth = useTypedSelector(store => store.auth)
     const navigator = useNavigate();
-    const bg = () => {
-        console.log("From bg() UserINFO:", auth.user)
-        return `https://localhost:7230/Images/userImages/${ user?.image}`;
-    }
   return (
       <div className="pageContent mt-5">
           {/* <Navbar/> */}
@@ -31,7 +27,7 @@ const ProfilePage: React.FC = () => {
             ) : (
                 <div className='pageList mt-5'>
                       Profile page
-                      <div className='iconMenu profileImg' style={{ backgroundRepeat: "no-repeat", backgroundSize: "500px", width: "500px", height: "500px", backgroundImage: `url(${bg()})` }}></div>
+                      <div className='iconMenu profileImg' style={{ backgroundRepeat: "no-repeat", backgroundSize: "500px", width: "500px", height: "500px", backgroundImage: `url(${user?.image})` }}></div>
                       <span className="nav-item log">
                                 <div>ID: {auth.user?.id}</div>
                                 <div>ID: {user?.id}</div>
@@ -57,7 +53,7 @@ const ProfilePage: React.FC = () => {
                         </li>
                         <li className="nav-item profile">
                             <a href="#">
-                                <div className='iconMenu profileImg' style={{ backgroundSize: "100px", backgroundImage: `url(${bg()})` }}>
+                                <div className='iconMenu profileImg' style={{ backgroundSize: "100px", backgroundImage: `url(${user?.image})` }}>
 
                                 </div>
                                 <span className="nav-text email">

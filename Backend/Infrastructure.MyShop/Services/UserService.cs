@@ -59,7 +59,8 @@ namespace Infrastructure.MyShop.Services
             }
             var user = _mapper.Map<UserEntity>(model);
             user.Image = await ImageHelper.SaveImageAsync(model.Image, DirectoriesInProject.UserImages);
-            
+
+
             var result = await _userRepository.CreateUserAsync(user, model.Password);
             
             if (!result.Succeeded)
@@ -192,6 +193,7 @@ namespace Infrastructure.MyShop.Services
                             FirstName = payload.GivenName,
                             LastName = payload.FamilyName,
                             Image = payload.Picture,
+                            IsGoogle = true
                         };
                         var resultCreate = await _userRepository.CreateUserAsync(user);
                         if (!resultCreate.Succeeded)
@@ -274,6 +276,7 @@ namespace Infrastructure.MyShop.Services
                 Email = user.Email,
                 phoneNumber = user.PhoneNumber,
                 Image = user.Image,
+                ImageURL = user.IsGoogle == false ? $"{DirectoriesInProject.Api}/{DirectoriesInProject.UserImages}/{user.Image}" : user.Image,
                 Permissions = user.Permissions.Select(perm => new PermissionItemDTO { RoleName = perm.Role.Name }).ToList()
             }).ToListAsync();
             return new ServiceResponse
@@ -294,6 +297,7 @@ namespace Infrastructure.MyShop.Services
                 Email = user.Email,
                 phoneNumber = user.PhoneNumber,
                 Image = user.Image,
+                ImageURL = user.IsGoogle == false ? $"{DirectoriesInProject.Api}/{DirectoriesInProject.UserImages}/{user.Image}" : user.Image,
                 Permissions = user.Permissions.Select(perm => new PermissionItemDTO { RoleName = perm.Role.Name }).ToList()
             }).ToListAsync();
 

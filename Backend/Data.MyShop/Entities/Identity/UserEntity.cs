@@ -18,6 +18,7 @@ namespace Data.MyShop.Entities.Identity
         public string LastName { get; set; }
         [StringLength(200)]
         public string Image { get; set; }
+        public bool IsGoogle { get; set; } = false;
         public virtual ICollection<PermissionsEntity> Permissions { get; set; }
         public virtual ICollection<CommentEntity> Comments { get; set; }
     }

@@ -57,7 +57,7 @@ export default function HomePage() {
             <Link to={"/product?id=" + product.id} style={{textDecoration:"none", color: 'black'}}><i className='fa fa-heart-o'></i></Link>
             <img 
               style={{ width: "100%", height: "120px", objectFit: "contain" }}
-              src={`${APP_ENV.BASE_URL}Images/productImages/${product.images[0].name}`}
+              src={`${product.images[0].name}`}
               className=""
               alt="productImage"
             />

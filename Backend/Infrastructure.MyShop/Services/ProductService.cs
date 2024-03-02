@@ -54,14 +54,14 @@ namespace Infrastructure.MyShop.Services
                     Images =
                         x.ProductImages
                         .Select(x =>
-                            new ProductImageItemDTO { Id = x.Id, Name = x.Name, ProductId = x.ProductId, ProductName = x.Product.Name })
+                            new ProductImageItemDTO { Id = x.Id, Name = $"{DirectoriesInProject.Api}/{DirectoriesInProject.ProductImages}/{x.Name}", ProductId = x.ProductId, ProductName = x.Product.Name })
                         .ToList()
                 }).ToListAsync();
             return new ServiceResponse
             {
                 Message = "GetProduct",
                 IsSuccess = true,
-                Payload = result
+                Payload = result[0]
             };
         }
         public async Task<ServiceResponse> GetProductsAsync()
@@ -82,7 +82,7 @@ namespace Infrastructure.MyShop.Services
                     Images =
                         x.ProductImages
                         .Select(x =>
-                            new ProductImageItemDTO { Id = x.Id, Name = x.Name, ProductId = x.ProductId, ProductName = x.Product.Name })
+                            new ProductImageItemDTO { Id = x.Id, Name = $"{DirectoriesInProject.Api}/{DirectoriesInProject.ProductImages}/{x.Name}", ProductId = x.ProductId, ProductName = x.Product.Name })
                         .ToList()
                 }).ToListAsync();
 
@@ -113,7 +113,7 @@ namespace Infrastructure.MyShop.Services
                     Images =
                         x.ProductImages
                         .Select(x =>
-                            new ProductImageItemDTO { Id = x.Id, Name = x.Name, ProductId = x.ProductId, ProductName = x.Product.Name })
+                            new ProductImageItemDTO { Id = x.Id, Name = $"{DirectoriesInProject.Api}/{DirectoriesInProject.ProductImages}/{x.Name}", ProductId = x.ProductId, ProductName = x.Product.Name })
                         .ToList()
                 }).ToListAsync();
             return new ServiceResponse

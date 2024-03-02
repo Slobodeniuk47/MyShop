@@ -41,7 +41,7 @@ namespace Infrastructure.MyShop.Services
                         Description = c.Description,
                         ParentId = c.ParentId,
                         ParentName = c.Parent.Name,
-                        Image = c.Image,
+                        Image = $"{DirectoriesInProject.Api}/{DirectoriesInProject.CategoryImages}/{c.Image}",
                         DateCreated = DateTime.SpecifyKind(c.DateCreated, DateTimeKind.Utc).ToString(),
                         DateUpdated = DateTime.SpecifyKind(c.DateUpdated, DateTimeKind.Utc).ToString(),
                         //countSubcategories
@@ -88,7 +88,7 @@ namespace Infrastructure.MyShop.Services
                 Description = c.Description,
                 ParentId = c.ParentId,
                 ParentName = c.Parent.Name,
-                Image = c.Image,
+                Image = $"{DirectoriesInProject.Api}/{DirectoriesInProject.CategoryImages}/{c.Image}",
                 DateCreated = DateTime.SpecifyKind(c.DateCreated, DateTimeKind.Utc).ToString(),
                 DateUpdated = DateTime.SpecifyKind(c.DateUpdated, DateTimeKind.Utc).ToString(),
                 //countSubcategories
@@ -125,7 +125,7 @@ namespace Infrastructure.MyShop.Services
                     Description = c.Description,
                     ParentId = c.ParentId,
                     ParentName = c.Parent.Name,
-                    Image = c.Image,
+                    Image = $"{DirectoriesInProject.Api}/{DirectoriesInProject.CategoryImages}/{c.Image}",
                     DateCreated = DateTime.SpecifyKind(c.DateCreated, DateTimeKind.Utc).ToString(),
                     DateUpdated = DateTime.SpecifyKind(c.DateUpdated, DateTimeKind.Utc).ToString(),
                     //countSubcategories
@@ -156,7 +156,7 @@ namespace Infrastructure.MyShop.Services
                               ParentId = s.ParentId,
                               ParentName = s.Parent.Name,
                               Description = s.Description,
-                              Image = s.Image
+                              Image = $"{DirectoriesInProject.Api}/{DirectoriesInProject.CategoryImages}/{s.Image}"
                           }).ToList(),
                     //Products
                     Products = c.Products
@@ -178,7 +178,7 @@ namespace Infrastructure.MyShop.Services
                 return new ServiceResponse
                 {
                     IsSuccess = true,
-                    Payload = category
+                    Payload = category[0]
                 };
             }
 

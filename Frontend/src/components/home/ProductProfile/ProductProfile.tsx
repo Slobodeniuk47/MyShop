@@ -30,7 +30,6 @@ const ProductProfile=()=>{
     const [product, setProduct] = useState<IProductItem>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [searchParams, setSearchParams] = useSearchParams();
-    //const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
     useEffect(() => {
         getProductById();
         
@@ -40,7 +39,7 @@ const ProductProfile=()=>{
       http.get('api/product/get/' + searchParams.get('id'))
         .then((res) =>
         {
-          const product = res.data.payload[0];
+          const product = res.data.payload;
             setLoading(false);                
           setProduct(product);
           console.log("json: ", product);
@@ -52,12 +51,9 @@ const ProductProfile=()=>{
     var jsx_stars: JSX.Element[] = [];
       for(var i = 0;i<product.images.length;i++)
       {
-          jsx_stars.push( <img src={`${APP_ENV.BASE_URL}Images/productImages/${product.images[i].name}`} width={150} height={150} className=' mr-1 hover:contrast-75 image-container'/>);
+          jsx_stars.push( <img src={`${product.images[i].name}`} width={150} height={150} className=' mr-1 hover:contrast-75 image-container'/>);
       }
       return jsx_stars;
-  }
-  const bg = (imgName: string) => {
-        return `${APP_ENV.BASE_URL}Images/userImages/${imgName}`;
   }
   const getProductRating = (comments: ICommentItem[]) => {
     var star = 0;

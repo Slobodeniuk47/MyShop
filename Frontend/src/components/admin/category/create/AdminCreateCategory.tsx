@@ -36,24 +36,11 @@ const AdminCreateCategory = () => {
 
 
     const onSubmitFormikData = (values: ICategoryCreate) => {
-        const http2 = axios.create({
-            baseURL: APP_ENV.BASE_URL,
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        });
         console.log("Method POST: ", values);
-        // const data = new FormData()
-        // data.append('image', values.image);
-        // data.append('name', values.name);
-        // data.append('description', values.description);
-        // data.append('priority', JSON.stringify(values.priority));
-        // data.append('parentId', JSON.stringify(Number(values.parentId)));
-        http2.post("api/category/create", values).then(() => {
-            navigator("..");
-
+        formHttp.post("api/category/create", values).then(() => {
+            navigator("/admin/categories");
+            navigator(0);
         });
-        console.log("post");
     }
 
     const clickSelect = () => {

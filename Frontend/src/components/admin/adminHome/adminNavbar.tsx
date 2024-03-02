@@ -17,10 +17,6 @@ import { useTypedDispatch } from "../../../store/hooks/useTypedDispatch";
         }
         
     }, []);
-    
-  const bg = () => {
-        return `https://localhost:7230/Images/userImages/${ user?.image}`;
-    }
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -43,7 +39,7 @@ import { useTypedDispatch } from "../../../store/hooks/useTypedDispatch";
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
                   <Link className="nav-link" to="/profile">
-                    <img src={bg()} alt="userImage" width="30" height="30" style={{borderRadius: "50%"}}/>
+                    <img src={user?.image} alt="userImage" width="30" height="30" style={{borderRadius: "50%"}}/>
                     {user?.firstname}
                   </Link>
                 </li>

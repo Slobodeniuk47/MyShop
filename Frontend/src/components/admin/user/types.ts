@@ -7,6 +7,7 @@ export interface IUserItem {
     firstname: string;
     lastname: string;
     image: string;
+    imageURL: string;
     phoneNumber: string;
     permissions: IPermissions[];
 }

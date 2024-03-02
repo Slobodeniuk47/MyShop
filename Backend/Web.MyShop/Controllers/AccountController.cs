@@ -35,8 +35,8 @@ namespace Web.MyShop.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("create")]
-        public async Task<IActionResult> Create([FromForm] UserCreateDTO model)
+        [Route("register")]
+        public async Task<IActionResult> Register([FromForm] UserCreateDTO model)
         {
             var result = await _userService.RegisterUserAsync(model);
             return Ok(result);

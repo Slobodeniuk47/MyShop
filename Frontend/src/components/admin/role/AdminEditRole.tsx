@@ -36,7 +36,7 @@ const AdminEditRole = () => {
       {
         {
           
-          var data = res.data.payload[0];
+          var data = res.data.payload;
           console.log("loasd", data)
           setLoading(false);
           formik.setValues(data);

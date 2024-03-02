@@ -69,11 +69,11 @@ const CommentView=()=>{
         http.get('api/product/get/' + searchParams.get('id'))
             .then((res) =>
            {
-              const product = res.data.payload[0];
+              const product = res.data.payload;
                 setLoading(false);                
               setProduct(product);
               console.log("json: ", product);
-
+              console.log("res: ", res);
             })
     }
     const changeStars = (stars: number,star_id: number) => {
@@ -99,7 +99,7 @@ const CommentView=()=>{
         title: '',
         message: '',
         stars: 5,
-        productId: product?.id,
+        productId: 0,
         userId: 0,
         images: []
   };
@@ -199,33 +199,14 @@ const CommentView=()=>{
       </div>
     </div>
   ));
-    // const { data, isSuccess } = useGetProductByIdQuery({ Id: params.productId });
-    
-    // const { data, isSuccess }: { data?: { payload: IProductItem }, isSuccess: boolean } = useGetProductByIdQuery({ Id: params.productId });
-
-    // console.log(data);
-
-  const showProductImage = (product: IProductItem) => {
-    // console.log(product.images.length);
-    var jsx_stars: JSX.Element[] = [];
-      for(var i = 0;i<product.images.length;i++)
-      {
-          jsx_stars.push( <img src={`${APP_ENV.BASE_URL}Images/productImages/${product.images[i].name}`} width={150} height={150} className=' mr-1 hover:contrast-75 image-container'/>);
-      }
-      return jsx_stars;
-  }
   const showCommentImage = (comment: ICommentItem) => {
     // console.log(comment.images.length);
     var jsx_stars: JSX.Element[] = [];
       for(var i = 0;i<comment.images.length;i++)
       {
-          jsx_stars.push( <img src={`${APP_ENV.BASE_URL}Images/commentImages/${comment.images[i].name}`} width={100} height={100} className=' mr-1 hover:contrast-75 image-container'/>);
+          jsx_stars.push( <img src={`${comment.images[i].name}`} width={100} height={100} className=' mr-1 hover:contrast-75 image-container'/>);
       }
       return jsx_stars;
-  }
-  const bg = (imgName: string) => {
-    //console.log(user);
-        return `${APP_ENV.BASE_URL}Images/userImages/${imgName}`;
   }
   const deleteConfirmed = () => {
         console.log(1);
@@ -332,7 +313,7 @@ const CommentView=()=>{
                     user?.roles == "Editor" ||
                     user?.roles == "Moder" || 
                     user?.id == item.userId ? <a onClick={() => deleteCommentModel(item.id)} ><i className='fa fa-trash btnDelete'></i></a> : null}
-                <div><img src={bg(item.user.image)} alt="userImage" width="50" height="50" style={{ borderRadius: "8%" }} /> {item.user.firstname} {item.user.lastname}</div>
+                <div><img src={item.user.imageURL} alt="userImage" width="50" height="50" style={{ borderRadius: "8%" }} /> {item.user.firstname} {item.user.lastname}</div>
                 <div>Comment ID: {item.id}</div>
                 <h5>{item.dateCreated}</h5>
                     <div>Title: {item.title}</div>

@@ -52,7 +52,7 @@ const AdminEditUser = () => {
         {
           var { payload } = res.data;
           setLoading(false);
-          setImage(APP_ENV.BASE_URL + "Images/userImages/" + payload.image)
+          setImage(payload.imageURL)
           formik.setValues(payload);
           formik.setFieldValue("role", payload.permissions[0] != null ? payload.permissions[0].roleName : "User");
            //Init role on the formik

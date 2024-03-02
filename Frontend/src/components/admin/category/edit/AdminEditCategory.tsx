@@ -19,9 +19,9 @@ const AdminEditCategory = () => {
         console.log("id: " + searchParams.get('id'));
         formHttp.get("api/category/get/"+ searchParams.get('id'))
             .then(resp => {
-                const data = resp.data.payload[0];
+                const data = resp.data.payload;
                 setLoading(false);
-                setImage(APP_ENV.BASE_URL + "images/categoryImages/" + data.image);
+                setImage(data.image);
                 formik.setValues(data);
                 console.log("values ", data);
 

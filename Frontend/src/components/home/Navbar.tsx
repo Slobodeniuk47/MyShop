@@ -15,9 +15,6 @@ export default function Navbar(){
         dispatch({ type: AuthReducerActionType.LOGOUT_USER });
         navigator("/login");
   }
-  const bg = () => {
-        return `https://localhost:7230/Images/userImages/${ user?.image}`;
-    }
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -57,7 +54,7 @@ export default function Navbar(){
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <Link className="nav-link" to="/profile">
-                    <img src={bg()} alt="userImage" width="30" height="30" style={{borderRadius: "50%"}}/>
+                    <img src={user?.image} alt="userImage" width="30" height="30" style={{borderRadius: "50%"}}/>
                     {user?.firstname}[{user?.id}]
                   </Link>
                 </li>

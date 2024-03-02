@@ -106,7 +106,7 @@ const AdminCategoriesView = () => {
                                                 {item.id}
                                             </td>
                                             <td>
-                                                <img src={APP_ENV.BASE_URL + 'images/categoryImages/' + item.image} height={60}></img>
+                                                <img src={item.image} height={60}></img>
                                             </td>
                                             <td>
                                                 {item.name}

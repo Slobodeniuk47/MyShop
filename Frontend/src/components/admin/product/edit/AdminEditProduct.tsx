@@ -28,7 +28,7 @@ const AdminEditProduct = () => {
         console.log("id: " + searchParams.get('id'));
         http.get("api/product/get/"+searchParams.get('id'))
             .then(resp => {
-                const data = resp.data.payload[0];
+                const data = resp.data.payload;
                 setFieldValue("id", searchParams.get('id'));
                 setLoading(false);
                 //setImage(APP_ENV.BASE_URL + "images/categoryImages/" + json.image);
@@ -109,10 +109,6 @@ const AdminEditProduct = () => {
     });
 
     const onSubmitFormikData = async (values: IProductEdit) => {
-        // console.log(values);       
-        // formHttp.post('api/product/get', values, {
-        // }).then(resp => {navigator("..");})
-        // navigator("..");
         try {
             var formData = new FormData();
             formData.append("id", values.id.toString());

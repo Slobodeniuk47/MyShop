@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { APP_ENV } from "../../../../env";
-import { http } from "../../../../http";
+import { formHttp, http } from "../../../../http";
 import { IUserItem } from "../types";
 import { Link, useNavigate } from "react-router-dom";
 import { useTypedSelector } from "../../../../store/hooks/useTypedSelector";
@@ -21,7 +21,7 @@ const AdminUsersView = () => {
     }, []);
 
     const loadUsers = () => {
-        http.get("api/Account/get")
+        formHttp.get("api/Account/get")
             .then(resp => {
                 const { payload } = resp.data;
                 console.log(payload);
@@ -31,7 +31,7 @@ const AdminUsersView = () => {
     }
 
     const deleteConfirmed = () => {
-        console.log(1);
+        console.log("DeleteID: ", deleteId);
 
         http.delete('api/Account/delete/' + deleteId)
             .then(() => {
@@ -109,7 +109,7 @@ const AdminUsersView = () => {
                                                 {item.id} [{ item.permissions[0] != null ? item.permissions[0].roleName : "None"}]
                                             </td>
                                             <td>
-                                                <img src={APP_ENV.BASE_URL + 'Images/userImages/' + item.image} height={60}></img>
+                                                <img src={item.imageURL} height={60}></img>
                                             </td>
                                             <td>
                                                 {item.firstname}
