@@ -19,11 +19,11 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
     private String email;
     private String image;
-    private String imageURL;
     private String firstname;
     private String lastname;
     private String phoneNumber;
     private String passwordHash;
+    private boolean isGoogle = false;
     @OneToMany(mappedBy = "user")
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 }

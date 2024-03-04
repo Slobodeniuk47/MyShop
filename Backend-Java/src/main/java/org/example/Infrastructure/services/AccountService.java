@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,11 +50,10 @@ public class AccountService implements IAccountService {
                         .image("image")
                         .email(googleUserInfo.getEmail())
                         .firstname("firstname")
-                        .imageURL(Path.ApiURL + "images/" + "image")
                         .lastname("lastname")
                         .passwordHash("password")
                         .phoneNumber("phonenumber")
-
+                        .isGoogle(true)
                         .build();
                 _userRepository.save(newUser);
                 //Set role for user
@@ -115,7 +115,6 @@ public class AccountService implements IAccountService {
                 .image(fileName)
                 .email(model.getEmail())
                 .firstname(model.getFirstname())
-                .imageURL(Path.ApiURL + "images/" + fileName)
                 .lastname(model.getLastname())
                 .passwordHash(_passwordEncoder.encode(model.getPassword()))
                 .phoneNumber(model.getPhoneNumber())
@@ -146,7 +145,6 @@ public class AccountService implements IAccountService {
             _storageService.removeFile(user.getImage());
             fileName = _storageService.saveByFormat(model.getImageUpload(), FileSaveFormat.PNG);
             newUser.setImage(fileName);
-            newUser.setImageURL(Path.ApiURL + "images/" + fileName);
         }
         newUser.setEmail(model.getEmail());
         newUser.setFirstname(model.getFirstname());

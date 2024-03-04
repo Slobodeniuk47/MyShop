@@ -55,6 +55,8 @@ const LoginView = () => {
       .then(x =>
       {
         const user = jwtDecode(x.data.payload) as IUser;
+        console.log("UserJWTDecode: ", user)
+        console.log("x.Data.Payload ", x.data.payload);
         localStorage.token = x.data.payload;
         
         dispatch({

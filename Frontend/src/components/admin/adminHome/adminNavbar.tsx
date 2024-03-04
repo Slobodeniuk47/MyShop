@@ -11,12 +11,12 @@ import { useTypedDispatch } from "../../../store/hooks/useTypedDispatch";
   const dispatch = useTypedDispatch();
 
     const navigator = useNavigate();
-    React.useEffect(() => {
-        if (user?.roles != "Admin") {
-            navigator("/");
-        }
+    // React.useEffect(() => {
+    //     if (user?.roles != "Admin") {
+    //         navigator("/");
+    //     }
         
-    }, []);
+    // }, []);
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">

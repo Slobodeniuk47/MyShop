@@ -5,6 +5,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
+import org.example.DAL.constants.Path;
 import org.example.DAL.entities.account.UserEntity;
 import org.example.DAL.repositories.IUserRoleRepository;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class JwtTokenService {
                 .claim("firstname", user.getFirstname())
                 .claim("lastname", user.getLastname())
                 .claim("phoneNumber", user.getPhoneNumber())
-                .claim("image", user.getImageURL())
+                .claim("image", user.isGoogle() == false ? Path.ApiURL + "images/"+ user.getImage() : user.getImage())
                 .claim("roles", roles.stream()                                      //writing the list Roles by User
                         .map((role) -> role.getRole().getName()).toArray(String []:: new))
                 .setIssuer(jwtIssuer) //Writing the owner of the token

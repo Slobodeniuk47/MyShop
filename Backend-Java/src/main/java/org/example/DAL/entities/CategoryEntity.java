@@ -18,7 +18,6 @@ public class CategoryEntity extends BaseEntity
 {
     private String description;
     private String image;
-    private String imageUrl;
     @ManyToOne
     @JoinColumn(name="parent_Id", nullable = true)
     private CategoryEntity parent;

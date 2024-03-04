@@ -1,6 +1,7 @@
 package org.example.Infrastructure.mappers;
 
 import lombok.AllArgsConstructor;
+import org.example.DAL.constants.Path;
 import org.example.DAL.entities.account.UserEntity;
 import org.example.DAL.repositories.IUserRoleRepository;
 import org.example.Infrastructure.dto.accountDTO.PermissionItemDTO;
@@ -28,7 +29,7 @@ public class UserMapper implements IUserMapper {
         dto.setDateUpdated(userEntity.getDateUpdated().toString());
         dto.setPhoneNumber(userEntity.getPhoneNumber());
         dto.setImage(userEntity.getImage());
-        dto.setImageURL(userEntity.getImageURL());
+        dto.setImageURL(userEntity.isGoogle() == false ? Path.ApiURL + "images/"+ userEntity.getImage() : userEntity.getImage());
         //Get permissions
         var permissionsDTO = new ArrayList<PermissionItemDTO>();
         var permissions = _userRoleRepository.findByUser(userEntity);
