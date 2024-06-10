@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  web.myshop:
+    image: ${DOCKER_REGISTRY-}webmyshop
+    build:
+      context: .
+      dockerfile: Web.MyShop/Dockerfile

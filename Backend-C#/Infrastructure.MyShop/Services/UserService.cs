@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core.Pipeline;
 using Data.MyShop.Constants;
 using Data.MyShop.Entities.Identity;
 using Data.MyShop.Interfaces;
@@ -12,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Abstractions;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using System;

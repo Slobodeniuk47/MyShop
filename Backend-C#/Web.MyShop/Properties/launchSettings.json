@@ -5,7 +5,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_SECRET": "This is a secret or key for jwt",
+        "JWT_ISSUER": "Auth"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5000"
@@ -15,7 +17,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_SECRET": "This is a secret or key for jwt",
+        "JWT_ISSUER": "Auth"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7230;http://localhost:5157"
@@ -25,8 +29,17 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_SECRET": "This is a secret or key for jwt",
+        "JWT_ISSUER": "Auth"
       }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true,
+      "useSSL": true
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -8,7 +9,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminCreateCategory from './components/admin/category/create/AdminCreateCategory';
 import RegistrationView from './components/auth/registration/RegistrationPage';
 import LoginView from './components/auth/login/LoginView';
-import { Provider } from 'react-redux';
 import jwtDecode from "jwt-decode";
 import { store } from "./store/store";
 import { IUser } from "./components/auth/types";
